@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lobby Area</title>
+    <link rel="stylesheet" href="lobbyArea.css">
+    <script src="lobbyArea.js"></script>
+    <script src="../../common/context-path-helper.js"></script>
+</head>
+<body>
+    <div class="lobby-registered-players">
+        <ul class = "lobby-userslist">
+                <li>moshe</li>
+                <li>sasson</li>
+        </ul>
+    </div>
+    <div class="lobby-details">
+        <h1 id="lobby-player-name"></h1>
+        <table class = "lobby-games">
+            <tr class = "lobby-boards-title">
+                <th class="lobby-col-title">Number</th>
+                <th class="lobby-col-title">Game Name</th>
+                <th class="lobby-col-title">Created By</th>
+                <th class="lobby-col-title">Registered Players</th>
+                <th class="lobby-col-title">Board Size</th>
+                <th class="lobby-col-title">Target</th>
+                <th class="lobby-col-title">Active</th>
+            </tr>
+        </table>
+        <br>
+    <input class="lobby-file-choicer" type="file" value="file choicer" accept=".xml"/>
+        <br>
+        <button type="button">Logout</button>
+    </div>
+</body>
+</html>
