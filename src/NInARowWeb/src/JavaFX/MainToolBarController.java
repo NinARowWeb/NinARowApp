@@ -1,6 +1,7 @@
 package JavaFX;
 
 import Engine.EngineGame;
+import Engine.VarientEnum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -113,30 +114,30 @@ public class MainToolBarController implements Controller{
         StartGameButton.setText("Start Game");
         StartGameButton.setOnAction(e -> handleClickStartGameButton(e));
     }
-
+/*
     @FXML
     void handleClickInformationButton(ActionEvent event) {
         switch (m_Engine.getVarient()){
-            case REGULAR:{
+            case VarientEnum.REGULAR:{
                 JOptionPane.showMessageDialog(null, "You can insert disc by clicking a column in the highest row.", "Regular Game", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
-            case CIRCULAR:{
+            case VarientEnum.CIRCULAR:{
                 JOptionPane.showMessageDialog(null, "You can insert disc by clicking a column in the highest row. \n You can achieve a win by circular target.", "Circular Game", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
-            case POPOUT:{
+            case VarientEnum.POPOUT:{
                 JOptionPane.showMessageDialog(null, "You can insert disc by clicking a column in the highest row.\n Or You can remove your disc by clicking a column in the lowest row.", "Popout Game", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
         }
     }
-
+*/
     private void handleSelectedSkin(CheckMenuItem i_MainSkin, CheckMenuItem i_FirstDisableSkin,
                                     CheckMenuItem i_SecondDisableSkin, String i_PathSkin){
         if(!i_MainSkin.isSelected()) {
             for (GameState currentListener : m_InitialGameNotifier)
-                currentListener.setSkin("/pages/css/DefaultSkin.css");
+                currentListener.setSkin("/web/pages/css/DefaultSkin.css");
         } else {
             if(i_FirstDisableSkin.isSelected()) {
                 i_FirstDisableSkin.setSelected(false);
@@ -150,19 +151,19 @@ public class MainToolBarController implements Controller{
 
     @FXML
     void handleSelectedFSecondSkin(ActionEvent event) {
-        final String secondSkinPath = "/pages/css/SecondSkin.css";
+        final String secondSkinPath = "/web/pages/css/SecondSkin.css";
         handleSelectedSkin(SecondSkin,ThirdSkin,FirstSkin,secondSkinPath);
     }
 
     @FXML
     void handleSelectedFirstSkin(ActionEvent event) {
-        final String firstSkinPath = "/pages/css/FirstSkin.css";
+        final String firstSkinPath = "/web/pages/css/FirstSkin.css";
         handleSelectedSkin(FirstSkin,SecondSkin,ThirdSkin,firstSkinPath);
     }
 
     @FXML
     void handleSelectedThirdSkin(ActionEvent event) {
-        String thirdSkinPath = "/pages/css/ThirdSkin.css";
+        String thirdSkinPath = "/web/pages/css/ThirdSkin.css";
         handleSelectedSkin(ThirdSkin,FirstSkin,SecondSkin,thirdSkinPath);
     }
 

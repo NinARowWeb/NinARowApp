@@ -29,7 +29,7 @@
       <Button fx:id="FinishedLoadGame" layoutX="207.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleOKClickButton" prefHeight="25.0" prefWidth="51.0" text="OK" visible="false" />
       <ImageView fitHeight="150.0" fitWidth="305.0" layoutX="178.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../resources/N%20in%20a%20Row.png" />
+            <Image url="@../../web/resources/N%20in%20a%20Row.png" />
          </image>
       </ImageView>
    </children>

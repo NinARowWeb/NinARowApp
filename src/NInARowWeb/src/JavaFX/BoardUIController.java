@@ -5,7 +5,6 @@ import Engine.GameStateEnum;
 import Engine.PlayerEngine;
 import Engine.VarientEnum;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -105,7 +104,7 @@ public class BoardUIController {
 
     public void initialBoard(){
         final int buttonSize = 40;
-        final String path = "/resources/background.png";
+        final String path = "/temp/src/resources/background.png";
         Background image = new Background(new BackgroundFill(new ImagePattern(new Image(path)),CornerRadii.EMPTY, Insets.EMPTY));
         VBox boardRows = new VBox(m_Rows);
         for(int i = 0;i<m_Rows;++i){
