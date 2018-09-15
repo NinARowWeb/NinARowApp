@@ -1,5 +1,6 @@
 package Game.Servlet;
 
+import Game.Utils.ErrorUtils;
 import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
 import boards.Board;
@@ -34,10 +35,9 @@ public class LobbyServlet extends HttpServlet {
         String jsonResponse;
         Set<User> users = userManager.getUsers();
         List<Board> boards = boardsManager.getBoards();
-        jsonResponse = gson.toJson(new LobbyContentResponse(users,boards));
+        jsonResponse = gson.toJson(new LobbyContentResponse(users,boards,ErrorUtils.getErrorUploadMessage()));
         PrintWriter out = response.getWriter();
         out.print(jsonResponse);
-
     }
 
     @Override
@@ -52,7 +52,7 @@ public class LobbyServlet extends HttpServlet {
             }
         }
         catch (Exception ex){
-            response.sendError(403,ex.getMessage());
+            ErrorUtils.setErrorUploadGameError(new Error(ex.getMessage()));
         }
 
     }

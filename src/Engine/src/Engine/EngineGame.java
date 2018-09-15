@@ -29,11 +29,11 @@ public class EngineGame implements CommandsInterface, Serializable {
     private boolean m_GameLoader = false;
     private boolean m_RestartGame = false;
     private DetailsInput m_GameDetails;
-    private final int k_AmountOfPlayers = 2;
     private TimeWatch m_StartTime;
     private VarientEnum m_Varient;
     private Parser m_DataParser;
     private String m_GameTitle;
+    private int m_CapacityOfPlayers;
 
     public EngineGame(Parser i_Parser){
         m_DataParser = i_Parser;
@@ -79,6 +79,10 @@ public class EngineGame implements CommandsInterface, Serializable {
         return m_RegisterPlayers.size();
     }
 
+    public int getCapacityOfPlayers(){
+        return m_CapacityOfPlayers;
+    }
+
     public String getGameTitle(){
         return m_GameTitle;
     }
@@ -103,7 +107,8 @@ public class EngineGame implements CommandsInterface, Serializable {
 
     private void initialGame(DetailsInput i_GameDetails){
         m_Board = new BoardGame(i_GameDetails.getRows(),i_GameDetails.getCols());
-        m_RegisterPlayers = new ArrayList<>(k_AmountOfPlayers);
+        m_RegisterPlayers = new ArrayList<>(i_GameDetails.getAmountOfPlayers());
+        m_CapacityOfPlayers = i_GameDetails.getAmountOfPlayers();
         m_Sequence = i_GameDetails.getSequence();
         m_Varient = i_GameDetails.getVariant();
         m_GameTitle = i_GameDetails.getGameTitle();
