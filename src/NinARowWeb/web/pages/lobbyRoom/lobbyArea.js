@@ -86,7 +86,7 @@ function enterGame(gameForm){
         data: {"gamename" : currentGame},
 //        dataType: 'text',//TODO: check why json dataType crashing
         success: function(response){
-            window.location = "/NinARow/Game/GameRoom.html"
+            window.location = "/NinARow/Game/GameRoom.html";
         }
     })
 }
