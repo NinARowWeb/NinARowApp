@@ -34,7 +34,7 @@ public class UserManager {
     }
 
     public synchronized Set<User> getUsers() {
-        return Collections.unmodifiableSet(usersSet);
+        return usersSet;
     }
 
     public boolean isUserExists(String username) {

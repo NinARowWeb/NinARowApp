@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lobby Area</title>
+    <link rel="stylesheet" href="lobbyArea.css">
+    <script src="../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../common/context-path-helper.js"></script>
+    <script src="lobbyArea.js"></script>
+</head>
+<body>
+<div class="lobby-registered-players">
+    <h2>Online Users</h2>
+    <ul id = "lobby-userslist">
+    </ul>
+</div>
+<div class="lobby-details">
+    <h1 id="lobby-player-name"></h1>
+    <table id = "lobby-games">
+        <tr class = "lobby-boards-titles">
+            <th class="lobby-col-title">Number</th>
+            <th class="lobby-col-title">Game Name</th>
+            <th class="lobby-col-title">Created By</th>
+            <th class="lobby-col-title">Registered Players</th>
+            <th class="lobby-col-title">Board Size</th>
+            <th class="lobby-col-title">Target</th>
+            <th class="lobby-col-title">Active</th>
+            <th class="lobby-col-title">Join Game</th>
+        </tr>
+    </table>
+    <br>
+    <form id = "lobby-form" action="lobbyArea" enctype="multipart/form-data" method="POST">
+        <input class="lobby-file-choicer" type="file" value="file choicer" accept=".xml"/><br>
+        <input id = "upload-Game" type="Submit" value="Upload File"><br>
+    </form>
+    <button type="button">Logout</button>
+    <div id ="error-message"></div>
+</div>
+</body>
+</html>

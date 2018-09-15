@@ -4,6 +4,7 @@ import boards.BoardsManager;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,10 +29,11 @@ public class EngineGame implements CommandsInterface, Serializable {
     private boolean m_GameLoader = false;
     private boolean m_RestartGame = false;
     private DetailsInput m_GameDetails;
-    private final int k_AmountOfPlayers = 2;
     private TimeWatch m_StartTime;
     private VarientEnum m_Varient;
     private Parser m_DataParser;
+    private String m_GameTitle;
+    private int m_CapacityOfPlayers;
 
     public EngineGame(Parser i_Parser){
         m_DataParser = i_Parser;
@@ -77,6 +79,14 @@ public class EngineGame implements CommandsInterface, Serializable {
         return m_RegisterPlayers.size();
     }
 
+    public int getCapacityOfPlayers(){
+        return m_CapacityOfPlayers;
+    }
+
+    public String getGameTitle(){
+        return m_GameTitle;
+    }
+
     public short getPlayerTurnId(int i_PlayerIndex) {return m_RegisterPlayers.get(i_PlayerIndex).getId();}
 
     public int getPlayerTurnPlayed(int i_PlayerIndex){
@@ -97,9 +107,11 @@ public class EngineGame implements CommandsInterface, Serializable {
 
     private void initialGame(DetailsInput i_GameDetails){
         m_Board = new BoardGame(i_GameDetails.getRows(),i_GameDetails.getCols());
-        m_RegisterPlayers = new ArrayList<>(k_AmountOfPlayers);
+        m_RegisterPlayers = new ArrayList<>(i_GameDetails.getAmountOfPlayers());
+        m_CapacityOfPlayers = i_GameDetails.getAmountOfPlayers();
         m_Sequence = i_GameDetails.getSequence();
         m_Varient = i_GameDetails.getVariant();
+        m_GameTitle = i_GameDetails.getGameTitle();
 /*
         List<PlayerInput> gamePlayers = i_GameDetails.getPlayersInput();
         for(int i = 0;i<gamePlayers.size();++i){
@@ -111,8 +123,8 @@ public class EngineGame implements CommandsInterface, Serializable {
     }
 
     @Override
-    public DetailsInput loadGame(String i_FileName, BoardsManager i_BoardsManager) throws JAXBException {
-        m_GameDetails = m_DataParser.purse(i_FileName,k_MaxOfRows,k_MinOfRows,k_MaxOfCols,k_MinOfCols, i_BoardsManager);
+    public DetailsInput loadGame(InputStream i_GameDetails, BoardsManager i_BoardsManager) throws JAXBException {
+        m_GameDetails = m_DataParser.purse(i_GameDetails,k_MaxOfRows,k_MinOfRows,k_MaxOfCols,k_MinOfCols, i_BoardsManager);
         initialGame(m_GameDetails);
         return m_GameDetails;
     }

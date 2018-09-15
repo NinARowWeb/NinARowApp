@@ -2,8 +2,6 @@ package JavaFX;
 
 import Engine.EngineGame;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -12,7 +10,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 public class PlayerDetailsController implements Controller {
     private EngineGame m_Engine;

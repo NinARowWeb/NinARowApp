@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/src/Engine/Engine.iml" filepath="$PROJECT_DIR$/src/Engine/Engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/N in a Row.iml" filepath="$PROJECT_DIR$/N in a Row.iml" />
-      <module fileurl="file://$PROJECT_DIR$/src/NInARowWeb/NInARowWeb.iml" filepath="$PROJECT_DIR$/src/NInARowWeb/NInARowWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/NinARowWeb/NinARowWeb.iml" filepath="$PROJECT_DIR$/src/NinARowWeb/NinARowWeb.iml" />
     </modules>
   </component>
 </project>

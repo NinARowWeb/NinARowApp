@@ -7,16 +7,16 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.InputStream;
 
 public class XMLParser implements Parser {
 
     @Override
-    public DetailsInput purse(String i_SourceName, int i_MaxRows, int i_MinRows, int i_MaxCols, int i_MinCols, BoardsManager i_BoardsManager) throws JAXBException {
+    public DetailsInput purse(InputStream i_InputStream, int i_MaxRows, int i_MinRows, int i_MaxCols, int i_MinCols, BoardsManager i_BoardsManager) throws JAXBException {
         try {
-            File file = new File(i_SourceName);
             JAXBContext jaxbContext = JAXBContext.newInstance(GameDescriptor.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            GameDescriptor gameDetails = (GameDescriptor) jaxbUnmarshaller.unmarshal(file);
+            GameDescriptor gameDetails = (GameDescriptor) jaxbUnmarshaller.unmarshal(i_InputStream);
             return (checkAndGetDataToInitialGame(gameDetails, i_MaxRows, i_MinRows, i_MaxCols, i_MinCols, i_BoardsManager));
         } catch (JAXBException e) {
             throw new JAXBException("The file cannot be loaded");
@@ -26,7 +26,7 @@ public class XMLParser implements Parser {
     private DetailsInput checkAndGetDataToInitialGame(GameDescriptor i_GameDetails, int i_MaxRows, int i_MinRows, int i_MaxCols, int i_MinCols, BoardsManager i_BoardsManager) {
         int rows, cols, sequence, amountOfPlayers;
         VarientEnum variant = null;
-        if (i_GameDetails.getGameType() != "DynamicMultiPlayer")
+        if (i_GameDetails.getGameType().equals("DynamicMultiPlayer") == false)
             throw new IllegalArgumentException(" The game type is not legal");
         if (i_GameDetails.getGame().getBoard() == null)
             throw new IllegalArgumentException("The board is not exist");

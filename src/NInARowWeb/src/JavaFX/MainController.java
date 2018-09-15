@@ -59,7 +59,7 @@ public class MainController extends Application implements GameState, Update, Qu
         m_MainToolbar.addGameStateListener(this);
         m_GameForm.setTop(mainToolbarComponent);
         m_Scene = new Scene(m_GameForm, k_WidthMainScreen, heightMainScreen);
-        setSkin("/pages/css/DefaultSkin.css");
+        setSkin("/web/pages/css/DefaultSkin.css");
         primaryStage.setScene(m_Scene);
         primaryStage.setTitle("N In A Row");
         primaryStage.show();
@@ -75,7 +75,7 @@ public class MainController extends Application implements GameState, Update, Qu
         try {
             FXMLLoader currentLoader;
             currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/MainToolBar.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/MainToolBar.fxml");
             currentLoader.setLocation(url);
             mainToolbarComponent = currentLoader.load(url.openStream());
             m_MainToolbar = currentLoader.getController();
@@ -89,7 +89,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent currentPlayerDetailsComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/CurrentTurnDetails.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/CurrentTurnDetails.fxml");
             currentLoader.setLocation(url);
             currentPlayerDetailsComponent = currentLoader.load(url.openStream());
             m_CurrentDetails = currentLoader.getController();
@@ -103,7 +103,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent ComputerMoveComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/ComputerMove.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/ComputerMove.fxml");
             currentLoader.setLocation(url);
             ComputerMoveComponent = currentLoader.load(url.openStream());
             m_ComputerMove = currentLoader.getController();
@@ -116,7 +116,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent historyComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/HistoryMove.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/HistoryMove.fxml");
             currentLoader.setLocation(url);
             historyComponent = currentLoader.load(url.openStream());
             m_History = currentLoader.getController();
@@ -129,7 +129,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent playersDetailsComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/PlayersDetails.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/PlayersDetails.fxml");
             currentLoader.setLocation(url);
             playersDetailsComponent = currentLoader.load(url.openStream());
             m_PlayersDetails = currentLoader.getController();
@@ -144,7 +144,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent replayComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/Replay.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/Replay.fxml");
             currentLoader.setLocation(url);
             replayComponent = currentLoader.load(url.openStream());
             m_Replay = currentLoader.getController();
@@ -164,7 +164,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent QuitGameComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/QuitGame.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/QuitGame.fxml");
             currentLoader.setLocation(url);
             QuitGameComponent = currentLoader.load(url.openStream());
             m_QuitGame = currentLoader.getController();
@@ -180,7 +180,7 @@ public class MainController extends Application implements GameState, Update, Qu
         Parent loadGameComponent = null;
         try {
             FXMLLoader currentLoader = new FXMLLoader();
-            URL url = getClass().getResource("/FXML/LoadGame.fxml");
+            URL url = getClass().getResource("/temp/src/FXML/LoadGame.fxml");
             currentLoader.setLocation(url);
             loadGameComponent = currentLoader.load(url.openStream());
             m_LoadGame = currentLoader.getController();
