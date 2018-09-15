@@ -1,6 +1,7 @@
 package Game.Servlet;
 
 import Game.Utils.SessionUtils;
+import constants.Constants;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "UsersAuth", urlPatterns = {"/users"})
-public class UsersAuth extends HttpServlet{
+@WebServlet(name = "UsersAuthServlet", urlPatterns = {"/users"})
+public class UsersAuthServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try(PrintWriter out = response.getWriter()){
-            out.println(SessionUtils.getUsername(request));
+            out.println(SessionUtils.getAttribute(request,Constants.USERNAME));
             out.flush();
         }
     }

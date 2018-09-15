@@ -29,11 +29,13 @@
         </tr>
     </table>
     <br>
-    <form id = "lobby-form" action="lobbyArea" enctype="multipart/form-data" method="POST">
+    <form id = "lobby-form">
         <input class="lobby-file-choicer" type="file" value="file choicer" accept=".xml"/><br>
         <input id = "upload-Game" type="Submit" value="Upload File"><br>
     </form>
-    <button type="button">Logout</button>
+    <form id = "logout-form" action="/NinARow/logoutLobby" method="POST">
+        <input id ="logout-Button" type="submit" value="Logout">
+    </form>
     <div id ="error-message"></div>
 </div>
 </body>
