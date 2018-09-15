@@ -17,8 +17,8 @@ public class UserManager {
         usersSet = new HashSet<>();
     }
 
-    public synchronized void addUser(String username, boolean computer) {
-        usersSet.add(new User(username,computer));
+    public synchronized void addUser(String username) {
+        usersSet.add(new User(username));
     }
 
     public synchronized void removeUser(String username) {

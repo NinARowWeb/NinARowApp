@@ -112,14 +112,11 @@ public class EngineGame implements CommandsInterface, Serializable {
         m_Sequence = i_GameDetails.getSequence();
         m_Varient = i_GameDetails.getVariant();
         m_GameTitle = i_GameDetails.getGameTitle();
-/*
-        List<PlayerInput> gamePlayers = i_GameDetails.getPlayersInput();
-        for(int i = 0;i<gamePlayers.size();++i){
-            PlayerInput currentPlayer = gamePlayers.get(i);
-            String playerNameInSignEnum = "PLAYER" + (i+1);
-            m_RegisterPlayers.add(new PlayerEngine(currentPlayer.getName(),currentPlayer.getId(),currentPlayer.getComputerPlayer(),SignOnBoardEnum.valueOf(playerNameInSignEnum).getSign(),i));
-        }
-*/
+    }
+
+    public void addPlayer(String i_PlayerName, boolean i_IsComputer,int i_UniqueID){
+            String playerNameInSignEnum = "PLAYER" + (i_UniqueID+1);
+            m_RegisterPlayers.add(new PlayerEngine(i_PlayerName,(short)0,i_IsComputer,SignOnBoardEnum.valueOf(playerNameInSignEnum).getSign(),i_UniqueID)); //TODO: change the ID field
     }
 
     @Override

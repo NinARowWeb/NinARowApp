@@ -1,5 +1,6 @@
 package boards;
 
+import Engine.BoardCell;
 import Engine.EngineGame;
 
 public class Board {
@@ -25,16 +26,18 @@ public class Board {
         BoardSize = Engine.getRows() + "X" + Engine.getMaxCol();
     }
 
-/*
-    public int getAmountOfRegistersPlayers() {
-        return RegistersPlayers;
-    }
-*/
 
+    public int getAmountOfRegistersPlayers() {
+        return RegisteredPlayers;
+    }
+
+
+/*
     public void setAmountOfRegistersPlayers(int i_AmountOfRegistersPlayers) {
         RegisteredPlayers = i_AmountOfRegistersPlayers;
         RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
     }
+*/
 
     public boolean isActiveGame() {
         return ActiveGame == "Yes";
@@ -55,6 +58,13 @@ public class Board {
     public int getCapacityOfPlayers() {
         return CapacityOfPlayers;
     }
+    public int getSequence(){
+        return Engine.getSequence();
+    }
+*/
+    public BoardCell[][] getBoard(){
+        return Engine.getBoardForDisplay();
+    }
 
     public int getRows(){
         return Engine.getRows();
@@ -64,12 +74,16 @@ public class Board {
         return Engine.getMaxCol();
     }
 
-    public int getSequence(){
-        return Engine.getSequence();
-    }
-*/
     public String getVarient(){
         return Engine.getVarient().name();
     }
 
+    public void addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
+        Engine.addPlayer(i_RegisterPlayerName,i_IsComputerPlayer,RegisteredPlayers);
+        RegisteredPlayers++;
+        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
+        if(RegisteredPlayers == CapacityOfPlayers){
+            ActiveGame = "Yes";
+        }
+    }
 }

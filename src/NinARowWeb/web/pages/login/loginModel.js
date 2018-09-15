@@ -7,7 +7,7 @@ $(function () {
 function getErrorResponse() {
     $.ajax({
         method: 'GET',
-        url: "login",
+        url: "Login",
         timeout: 2000,
         success: function (response) {
             if(response !== "null"){

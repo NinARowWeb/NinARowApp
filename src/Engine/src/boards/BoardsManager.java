@@ -29,6 +29,10 @@ public class BoardsManager {
         return null;
     }
 
+    public synchronized Board getGameBoard(String i_GameName){
+        return m_BoardsGame.get(i_GameName);
+    }
+
     public boolean isUserExists(String i_GameName) {
         return m_BoardsGame.containsKey(i_GameName);
     }

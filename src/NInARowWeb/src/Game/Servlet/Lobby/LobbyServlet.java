@@ -1,11 +1,11 @@
-package Game.Servlet;
+package Game.Servlet.Lobby;
 
-import Game.Utils.ErrorUtils;
 import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
 import boards.Board;
 import boards.BoardsManager;
 import com.google.gson.Gson;
+import constants.Constants;
 import responses.LobbyContentResponse;
 import users.User;
 import users.UserManager;
@@ -35,7 +35,7 @@ public class LobbyServlet extends HttpServlet {
         String jsonResponse;
         Set<User> users = userManager.getUsers();
         List<Board> boards = boardsManager.getBoards();
-        jsonResponse = gson.toJson(new LobbyContentResponse(users,boards,ErrorUtils.getErrorUploadMessage()));
+        jsonResponse = gson.toJson(new LobbyContentResponse(users,boards,SessionUtils.getAttribute(request,Constants.ERROR_UPLOAD_GAME_ERROR),SessionUtils.getAttribute(request,Constants.IS_UPDATE_FILE)));
         PrintWriter out = response.getWriter();
         out.print(jsonResponse);
     }
@@ -48,12 +48,12 @@ public class LobbyServlet extends HttpServlet {
         BoardsManager boardsManager = ServletUtils.getBoardsManager(getServletContext());
         try{
             for(Part gameDetails : parts){
-                boardsManager.addGame(gameDetails.getInputStream(), SessionUtils.getUsername(request));
+                boardsManager.addGame(gameDetails.getInputStream(), SessionUtils.getAttribute(request,Constants.USERNAME));
             }
         }
         catch (Exception ex){
-            ErrorUtils.setErrorUploadGameError(new Error(ex.getMessage()));
+            SessionUtils.setAttribute(request,Constants.ERROR_UPLOAD_GAME_ERROR,ex.getMessage());
         }
-
+        SessionUtils.setAttribute(request,Constants.IS_UPDATE_FILE,"Yes");
     }
 }
