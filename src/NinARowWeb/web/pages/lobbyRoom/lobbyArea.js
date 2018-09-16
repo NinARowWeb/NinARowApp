@@ -86,7 +86,7 @@ function enterGame(gameForm){
         data: {"gamename" : currentGame},
 //        dataType: 'text',//TODO: check why json dataType crashing
         success: function(response){
-            window.location = "/NinARow/Game/GameRoom.html";
+            window.location = "/NinARow/pages/game/GameRoom.html";
         }
     })
 }
@@ -106,7 +106,7 @@ function createBoard(index,dataJson){
         var enterGame = $("<td class='lobby-col-title'>");
         var enterGameButton;
         if(dataJson.ActiveGame.toString() === "Yes")
-            enterGameButton = $("<input id ='enter-game-button' value='Join' disabled='true' type='submit'>");
+            enterGameButton = $("<input id ='enter-game-button' value='Join' disabled type='submit'>");
         else
             enterGameButton = $("<input id ='enter-game-button' value='Join' type='submit'>");
         //enterGameButton[0].innerHTML = "Join";
