@@ -1,5 +1,6 @@
 var USER = buildUrlWithContextPath("users");
 var BOARD_GAME_URL = buildUrlWithContextPath("BoardGame");
+var STATISTICS_URL = buildUrlWithContextPath("Statistics");
 
 $(function () {
     $.ajax({
@@ -15,10 +16,26 @@ $(function () {
 
 function getContent(){
     getBoardContent();
-    //getStatisticsContent();
+    getStatisticsContent();
     //getPlayersDetailsContent();
     //getHistoryContent();
     //getChatContent();
+}
+
+function getStatisticsContent(){
+    $.ajax({
+        url: STATISTICS_URL,
+        dataType: 'json',
+        success:function(data){
+            $("#Target").empty();
+            $("#Target").append(data.Target);
+            $("#Varient").empty();
+            $("#Varient").append(data.Varient);
+            $("#Current-name-turn").empty();
+            $("#Current-name-turn").append(data.PlayerNameTurn);
+
+        }
+    })
 }
 
 function getBoardContent(){
