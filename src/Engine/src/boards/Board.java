@@ -78,6 +78,14 @@ public class Board {
         return Engine.getVarient().name();
     }
 
+    public String getTarget(){
+        return Integer.toString(Engine.getSequence());
+    }
+
+    public String getPlayerName(){
+        return Engine.getPlayerTurnName(Engine.getTurn());
+    }
+
     public void addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
         Engine.addPlayer(i_RegisterPlayerName,i_IsComputerPlayer,RegisteredPlayers);
         RegisteredPlayers++;
