@@ -25,7 +25,7 @@ public class BoardGameServlet extends HttpServlet {
         Board game = manager.getGameBoard(boardName);
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        String jsonResponse = gson.toJson(new BoardGameContentResponse(game.getBoard(),game.getRows(),game.getCols(),game.getVarient()));
+        String jsonResponse = gson.toJson(new BoardGameContentResponse(game.getBoard(),game.getRows(),game.getCols(),game.getVarient(),game.isActiveGame()? "Yes" : "No",game.getStatus()));
         out.print(jsonResponse);
     }
 }

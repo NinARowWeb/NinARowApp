@@ -103,7 +103,7 @@ public class MainToolBarController implements Controller{
     }
 
     private void handleClickEndGameButton(ActionEvent event){
-        JOptionPane.showMessageDialog(null, m_Engine.getPlayerTurnName(m_Engine.getTurn()) + " finished the game!", "End Game", JOptionPane.INFORMATION_MESSAGE);
+      //  JOptionPane.showMessageDialog(null, m_Engine.getPlayerTurnName(m_Engine.getTurn()) + " finished the game!", "End Game", JOptionPane.INFORMATION_MESSAGE);
         for(GameState listener : m_InitialGameNotifier)
             listener.endGame();
     }

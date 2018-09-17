@@ -78,13 +78,13 @@ public class CurrentTurnDetailsController implements Controller{
     public void updateDetails()
     {
         m_CurrentPlayerTotalTurnsPlayed.set(m_Engine.getPlayerTurnPlayed(m_Engine.getTurn()));
-        m_CurrentPlayerName.set(m_Engine.getPlayerTurnName(m_Engine.getTurn()));
+     //   m_CurrentPlayerName.set(m_Engine.getPlayerTurnName(m_Engine.getTurn()));
         m_CurrentPlayerColorOnBoard.set(ColorOnBoardEnum.valueOf(m_Engine.getPlayerTypeName(m_Engine.getTurn())).getColor());
         m_CurrentPlayerID.set((m_Engine.getPlayerTurnId(m_Engine.getTurn())));
         m_GameMode.set(m_Engine.getVarient().name());
         m_Target.set(m_Engine.getSequence());
         m_Type.set(m_Engine.ComputerTurn(m_Engine.getTurn()) == true ? "Computer" : "Human Player");
-        m_NextPlayer.set(m_Engine.getPlayerTurnName((m_Engine.getTurn() + 1) % m_Engine.getAmountOfPlayers()));
+       // m_NextPlayer.set(m_Engine.getPlayerTurnName((m_Engine.getTurn() + 1) % m_Engine.getAmountOfPlayers()));
     }
 
     public void setDetails(String i_CurrentPlayerTotalTurnsPlayed, String i_CurrentPlayerName, String i_CurrentPlayerColorOnBoard,
