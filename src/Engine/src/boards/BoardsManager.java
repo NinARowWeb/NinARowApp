@@ -16,7 +16,7 @@ public class BoardsManager {
     public synchronized void addGame(InputStream i_GameDetails,String i_CreatedName) throws JAXBException {
         EngineGame newGame = new EngineGame(new XMLParser());
             newGame.loadGame(i_GameDetails,this);
-            m_BoardsGame.put(newGame.getGameTitle(),new Board(newGame.getGameTitle(), i_CreatedName, newGame.getCapacityOfPlayers(), newGame));
+            m_BoardsGame.put(newGame.getGameTitle(),new Board(newGame.getGameTitle(), i_CreatedName, newGame.getCapacityOfPlayers(),newGame,newGame.getStatus().name()));
     }
 
     public synchronized void removeGameName(String i_GameName) {

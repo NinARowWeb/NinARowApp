@@ -17,7 +17,7 @@ public class QuitGameController implements Controller{
 
     @FXML
     void handleQuitGameButtonClicked(ActionEvent event) {
-        JOptionPane.showMessageDialog(null, m_Engine.getPlayerTurnName(m_Engine.getTurn()) + " Quit!", "Quit Game", JOptionPane.INFORMATION_MESSAGE);
+       // JOptionPane.showMessageDialog(null, m_Engine.getPlayerTurnName(m_Engine.getTurn()) + " Quit!", "Quit Game", JOptionPane.INFORMATION_MESSAGE);
         int removePlayerUniqueID = m_Engine.getUniqueID();
         String retiredName = m_Engine.quitGame();
         for(QuitGameMode listener: m_Quit)

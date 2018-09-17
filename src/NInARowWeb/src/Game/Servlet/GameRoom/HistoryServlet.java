@@ -27,7 +27,11 @@ public class HistoryServlet extends HttpServlet {
         Board game = manager.getGameBoard(boardName);
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        String jsonResponse;
-        jsonResponse = gson.toJson(new HistoryContentResponse(game.getLastMove(),game.getLastMoveIndex()));
+        String jsonResponse = null;
+        if(game.getStatus() == "GAMING") {
+            jsonResponse = gson.toJson(new HistoryContentResponse(game.getLastMove(), game.getLastMoveIndex(),game.getStatus()));
+            //TODO: take care in retire details
+            out.write(jsonResponse);
+        }
     }
 }

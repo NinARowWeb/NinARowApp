@@ -47,6 +47,8 @@ public class EngineGame implements CommandsInterface, Serializable {
         return m_PopoutMove;
     }
 
+    public int getAmountOfMoves(){return m_HistoryMoves.size();}
+
     public VarientEnum getVarient() {
         return m_Varient;
     }
@@ -71,6 +73,10 @@ public class EngineGame implements CommandsInterface, Serializable {
         return m_RegisterPlayers.get(i_PlayerIndex).getPlayerTypeName();
     }
 
+    public boolean getPlayerType(int i_PlayerIndex){
+        return m_RegisterPlayers.get(i_PlayerIndex).isComputer();
+    }
+
     public List<Point> getWinnersTaraget(){
         return m_Board.getWinnersTarget();
     }
@@ -93,7 +99,11 @@ public class EngineGame implements CommandsInterface, Serializable {
         return m_RegisterPlayers.get(i_PlayerIndex).getTurnPlayed();
     }
 
-    public String getPlayerTurnName(int i_PlayerIndex){
+    public char getPlayerSignOnBoard(int i_PlayerIndex) {return m_RegisterPlayers.get(i_PlayerIndex).getSignOnBoard();}
+
+    public int getPlayerTurns(int i_PlayerIndex) {return m_RegisterPlayers.get(i_PlayerIndex).getTurnPlayed();}
+
+    public String getPlayerName(int i_PlayerIndex){
         return m_RegisterPlayers.get(i_PlayerIndex).getName();
     }
 
