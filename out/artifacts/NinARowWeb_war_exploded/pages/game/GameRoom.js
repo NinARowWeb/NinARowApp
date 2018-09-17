@@ -33,7 +33,10 @@ function getStatisticsContent(){
             $("#Varient").append(data.Varient);
             $("#Current-name-turn").empty();
             $("#Current-name-turn").append(data.PlayerNameTurn);
-
+            $("#Time-elapsed").empty();
+            $("#Time-elapsed").append(data.Time);
+            $("#Next-Player").empty();
+            $("#Next-Player").append(data.NextPlayerName);
         }
     })
 }
