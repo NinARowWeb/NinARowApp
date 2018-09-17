@@ -9,29 +9,47 @@
     <script src="GameRoom.js"></script>
 </head>
 <body>
-    <button type="button">Logout</button>
+    <form action ="logoutGame" method="POST">
+        <input type="submit" value = "Logout"/>
+    </form>
     <h3 id = "player-session-name"></h3>
     <div id="sidebar">
         <div id = "Statistics">
-            <label>Time elapsed:</label>
-            <label id = "Time-elapsed"></label>
-            <br>
-            <label>Current name:</label>
-            <label id = "Current-name-turn"></label>
-            <br>
             <label>Target:</label>
             <label id="Target"></label>
             <br>
             <label>Varient:</label>
             <label id="Varient"></label>
             <br>
-            <label>Next Player:</label>
+            <label class = "game-label">Time elapsed:</label>
+            <label id = "Time-elapsed"></label>
+            <br>
+            <label class = "game-label">Current name:</label>
+            <label id = "Current-name-turn"></label>
+            <br>
+            <label class = "game-label">Next Player:</label>
             <label id="Next-Player"></label>
         </div>
         <div id="playersDetails"></div>
     </div>
+    <h3 class = "game-label" id="History-label">History</h3>
     <div id="History">
         <ol id = "History-List">
+            <li>Coffee</li>
+            <li>Tea</li>
+            <li>Milk</li>
+            <li>Coffee</li>
+            <li>Tea</li>
+            <li>Milk</li>
+            <li>Coffee</li>
+            <li>Tea</li>
+            <li>Milk</li>
+            <li>Coffee</li>
+            <li>Tea</li>
+            <li>Milk</li>
+            <li>Coffee</li>
+            <li>Tea</li>
+            <li>Milk</li>
         </ol>
     </div>
     <div id = "board"></div>

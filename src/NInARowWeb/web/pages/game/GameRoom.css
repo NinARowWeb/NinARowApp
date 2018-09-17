@@ -16,4 +16,21 @@ html{
 #board{
     position: fixed;
     left: 20%;
+    top: 20%;
+}
+
+#History {
+    height: 120px;
+    width: 250px;
+    border: 1px solid #000000;
+    overflow: auto;
+    visibility: hidden;
+}
+
+#History History-List{
+    left: 0px;
+}
+
+.game-label{
+    visibility:hidden;
 }
