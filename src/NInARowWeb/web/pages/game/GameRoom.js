@@ -79,19 +79,23 @@ function getPlayersDetailsContent() {
 function getHistoryContent(){
     $.ajax({
         url: HISTORY_URL,
+        data: "Index=" + historyIndex,
         dataType: 'json',
         success:function(data){
-            if(data.GameActive === "GAMING" && data.lastMove && data.index !== historyIndex){
-                var newHistoryItem = $("<li class ='History-Item'>")
-                newHistoryItem[0].innerHTML = data.lastMove;
-                $("#History-List").append(newHistoryItem);
+            if(data.GameActive === "GAMING" && data.HistoryMoves && data.index !== historyIndex){
+                $("#History").css({"visibility":"visible"});
+                $.each(data.HistoryMoves || [], appendHistoryContent);
                 historyIndex = data.index;
             }
         }
     })
 }
 
-
+function appendHistoryContent(index,data) {
+    var newHistoryItem = $("<li class ='History-Item'>")
+    newHistoryItem[0].innerHTML = data;
+    $("#History-List").append(newHistoryItem);
+}
 
 function getBoardContent(){
     $.ajax({
@@ -148,7 +152,12 @@ function playerMove(button,popout){
             "Popout" : popout,
         },
         method: "POST",
-        success:function(data){}
+        success:function(data){
+            if(data){
+                $("#error-move-message").empty();
+                $("#error-move-message").append(data);
+            }
+        }
     })
 }
 

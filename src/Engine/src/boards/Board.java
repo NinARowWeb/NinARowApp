@@ -73,7 +73,7 @@ public class Board {
         return null;
     }
 
-    public String getLastMove(){
+    public String getHistoryMove(int i_Index){
         String lastMoveMessage;
         if(Engine.getAmountOfMoves() > 0) {
             DataHistoryDisc lastMove = Engine.getLastMove();
