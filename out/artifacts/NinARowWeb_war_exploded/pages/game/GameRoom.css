@@ -19,13 +19,12 @@ html{
     top: 20%;
 }
 
-#History {
-    height: 120px;
-    width: 250px;
-    border: 1px solid #000000;
-    overflow: auto;
-    visibility: hidden;
-}
+#History{
+     height:120px;
+     width:250px;
+     border:1px solid #000000;
+     overflow:auto;
+ }
 
 #History History-List{
     left: 0px;

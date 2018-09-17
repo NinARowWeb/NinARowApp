@@ -1,7 +1,10 @@
 package boards;
 
 import Engine.BoardCell;
+import Engine.DataHistoryDisc;
 import Engine.EngineGame;
+import Engine.SignOnBoardEnum;
+import JavaFX.ColorOnBoardEnum;
 
 public class Board {
     private final String GameName;
@@ -13,8 +16,9 @@ public class Board {
     private String ActiveGame;
     private int Target;
     private String BoardSize;
+    private String Status;
 
-    public Board(String i_GameName, String i_CreatedUserName, int i_CapacityOfPlayers, EngineGame i_Engine){
+    public Board(String i_GameName, String i_CreatedUserName, int i_CapacityOfPlayers, EngineGame i_Engine, String i_Status){
         GameName = i_GameName;
         CreatedUserName = i_CreatedUserName;
         CapacityOfPlayers = i_CapacityOfPlayers;
@@ -24,11 +28,21 @@ public class Board {
         ActiveGame = "No";
         Target = Engine.getSequence();
         BoardSize = Engine.getRows() + "X" + Engine.getMaxCol();
+        Status = i_Status;
     }
 
+    public String getTime(){
+        final int secondsInMinutes = 60;
+        long seconds = Engine.getTimeInSeconds();
+        return(String.format(" %02d:%02d", (seconds / secondsInMinutes), (seconds % secondsInMinutes)));
+    }
+
+    public String getStatus(){
+        return Status;
+    }
 
     public int getAmountOfRegistersPlayers() {
-        return RegisteredPlayers;
+        return Engine.getAmountOfPlayers();
     }
 
 
@@ -62,6 +76,24 @@ public class Board {
         return Engine.getSequence();
     }
 */
+
+    private SignOnBoardEnum purseSign(char i_Sign){
+        for(SignOnBoardEnum currentSign : SignOnBoardEnum.values()){
+            if(currentSign.getSign() == i_Sign)
+                return currentSign;
+        }
+        return null;
+    }
+
+    public String getLastMove(){
+        String lastMoveMessage;
+        DataHistoryDisc lastMove = Engine.getLastMove();
+        SignOnBoardEnum currentSign = purseSign(lastMove.getSign());
+        lastMoveMessage =  " " + lastMove.getName() + ", Color: " + ColorOnBoardEnum.valueOf((currentSign.name())).getColor() +
+                ", " + (lastMove.getPopout() ? "Popout: " : "Insert: ") +"(" +(lastMove.getLastMoveCoordinate().y + 1) + "," + (lastMove.getLastMoveCoordinate().x + 1) + ")";
+
+    }
+
     public BoardCell[][] getBoard(){
         return Engine.getBoardForDisplay();
     }
@@ -76,6 +108,16 @@ public class Board {
 
     public String getVarient(){
         return Engine.getVarient().name();
+    }
+
+    public String getTarget(){
+        return Integer.toString(Engine.getSequence());
+    }
+
+    public int getTurn(){return Engine.getTurn();}
+
+    public String getPlayerName(int i_Turn){
+        return Engine.getPlayerTurnName(i_Turn);
     }
 
     public void addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {

@@ -6,7 +6,7 @@ import boards.Board;
 import boards.BoardsManager;
 import com.google.gson.Gson;
 import constants.Constants;
-import responses.BoardGameContentResponse;
+import responses.HistoryContentResponse;
 import responses.StatisticsContentResponse;
 
 import javax.servlet.ServletException;
@@ -17,22 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "StatisticsServlet", urlPatterns = {"/Statistics"})
-public class StatisticsServlet extends HttpServlet {
-
+@WebServlet(name = "HistoryServlet", urlPatterns = {"/History"})
+public class HistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String boardName = SessionUtils.getAttribute(request,Constants.BOARD_GAME);
+        String boardName = SessionUtils.getAttribute(request, Constants.BOARD_GAME);
         BoardsManager manager = ServletUtils.getBoardsManager(getServletContext());
         Board game = manager.getGameBoard(boardName);
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String jsonResponse;
-        if(game.getStatus() == "Gamimg")
-            jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()),game.getTime(),game.getTarget(),game.getVarient(),game.getPlayerName((game.getTurn() + 1)%game.getAmountOfRegistersPlayers())));
-        else
-            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null));
-        out.print(jsonResponse);
+        jsonResponse = gson.toJson(new HistoryContentResponse(game.getLastMove(),game.getLastMoveIndex()));
     }
 }
