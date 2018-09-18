@@ -60,17 +60,16 @@ function getPlayersDetailsContent() {
         dataType: 'json',
         success: function (data) {
             if (data.GameActive === "GAMING") {
-                $("#playersDetails").empty();
-                var currentPlayer = $("<div class = 'playerDetails'>");
-                for (var i = 0; i < data.amountOfPlayers; ++i) {
-                    var name = $("<label class = 'playerName'>data.players[i].PlayerName");
-                    var type = $("<label class = 'playerType'>data.players[i].Type");
-                    var colorOnBoard = $("<label class = 'playerColor'>data.players[i].Color");
-                    var turnsPlayed = $("<label class = 'playerTurns'>data.players[i].Turns");
-                    var status = $("<label class = 'playerStatus'>data.players[i].Status");
-                    currentPlayer.append(name, type, colorOnBoard, turnsPlayed, status);
+                $("#playerDetails").empty();
+                for (var i = 0; i < data.Players.length; ++i) {
+                    var name = $("<label class = 'playerName'>").append(data.Players[i].PlayerName);
+                    var type = $("<label class = 'playerType'>").append(data.Players[i].Type);
+                    var colorOnBoard = $("<label class = 'playerColor'>").append(data.Players[i].Color);
+                    var turnsPlayed = $("<label class = 'playerTurns'>").append(data.Players[i].Turns);
+                    var status = $("<label class = 'playerStatus'>").append(data.Players[i].Status);
+                    $("#playerDetails").append(name[0]);
+//                    $("#playerDetails").append(name, type, colorOnBoard, turnsPlayed, status);
                 }
-                $("playersDetails").append(currentPlayer);
             }
         }
     })
