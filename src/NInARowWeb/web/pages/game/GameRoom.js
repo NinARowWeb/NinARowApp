@@ -5,6 +5,7 @@ var HISTORY_URL = buildUrlWithContextPath("History");
 var PLAYERS_DETAILS_URL = buildUrlWithContextPath("PlayersDetails");
 var START_GAME_URL = buildUrlWithContextPath("StartGame");
 var PLAYER_MOVE_URL = buildUrlWithContextPath("PlayerMove");
+var COMPUTER_MOVE_URL = buildUrlWithContextPath("ComputerMove");
 var historyIndex = 0;
 
 $(function () {
@@ -64,11 +65,11 @@ function getPlayersDetailsContent() {
                 $("#playersDetails").css({"visibility":"visible"});
                 for (var i = 0; i < data.Players.length; ++i) {
                     var player = $("<div class = 'playerDetails'>");
-                    var name = $("<label class = 'playerName'>").append("Name: " + data.Players[i].PlayerName).append($("<br>"));
-                    var type = $("<label class = 'playerType'>").append("Type: " +data.Players[i].Type).append($("<br>"));
-                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color: " +data.Players[i].Color).append($("<br>"));
-                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played: " +data.Players[i].Turns).append($("<br>"));
-                    var status = $("<label class = 'playerStatus'>").append("Status: " +data.Players[i].Status).append($("<br>"));
+                    var name = $("<label class = 'playerName'>").append("Name :" + data.Players[i].PlayerName).append($("<br>"));
+                    var type = $("<label class = 'playerType'>").append("Type :" +data.Players[i].Type).append($("<br>"));
+                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color :" +data.Players[i].Color).append($("<br>"));
+                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played :" +data.Players[i].Turns).append($("<br>"));
+                    var status = $("<label class = 'playerStatus'>").append("Status :" +data.Players[i].Status).append($("<br>"));
                     var seperator = $("<hr>");
                     player.append(name, type, colorOnBoard, turnsPlayed, status,seperator);
                     $("#playersDetails").append(player);
@@ -111,13 +112,13 @@ function getBoardContent(){
             for (row = 0; row < data.Rows; row++) {
                 for(col = 0; col < data.Cols; col++){
                     var button;
-                    if(data.GameStatus === "GAMING") {
+                    if(data.GameStatus === "GAMING" && data.ComputerPlayer === "false") {
                         if (row === 0) {
-                            button = $("<button id='board-cell-button' onclick='playerMove(this,false)'>");
+                            button = $("<button id='board-cell-button' onclick='humanPlayerMove(this,false)'>");
                             button[0].setAttribute("Col",col);
                         }
                         else if (row === (data.Rows - 1) && data.Varient === "POPOUT") {
-                            button = $("<button id ='board-cell-button' onclick='playerMove(this,true)' >");
+                            button = $("<button id ='board-cell-button' onclick='humanPlayerMove(this,true)' >");
                             button[0].setAttribute("Col",col);
                         }
                         else {
@@ -155,7 +156,7 @@ function setWinnersAnimation(data){
     }
 }
 
-function playerMove(button,popout){
+function humanPlayerMove(button,popout){
     var col = button.getAttribute("Col");
     $.ajax({
         url: PLAYER_MOVE_URL,
@@ -165,10 +166,25 @@ function playerMove(button,popout){
         },
         method: "POST",
         success:function(data){
-            $("#error-move-message").empty();
             if(data !== "null"){
                 $("#error-move-message").append(data);
                 setTimeout(clearErrorMessage(),10000);
+            }
+            else{
+                $("#error-move-message").empty();
+                setTimeout(ComputerMove,1000);
+            }
+        }
+    })
+}
+
+function ComputerMove(){
+    $.ajax({
+        url: COMPUTER_MOVE_URL,
+        method: "POST",
+        success:function(data){
+            if(data !== "null"){
+                setTimeout(ComputerMove(),1000);
             }
         }
     })

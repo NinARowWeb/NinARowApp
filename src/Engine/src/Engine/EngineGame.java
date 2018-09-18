@@ -77,7 +77,7 @@ public class EngineGame implements CommandsInterface, Serializable {
         return m_RegisterPlayers.get(i_PlayerIndex).isComputer();
     }
 
-    public List<Point> getWinnersTaraget(){
+    public List<Point> getWinnersTarget(){
         return m_Board.getWinnersTarget();
     }
 

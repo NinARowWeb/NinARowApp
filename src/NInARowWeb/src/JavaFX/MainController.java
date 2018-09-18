@@ -260,7 +260,7 @@ public class MainController extends Application implements GameState, Update, Qu
 
     @Override
     public void endGame() {
-        updateWinnerAnimation(m_Engine.getWinnersTaraget());
+        updateWinnerAnimation(m_Engine.getWinnersTarget());
         m_QuitGame.setDisableQuitGameButton(true);
         m_MainToolbar.setEndGameMode();
         m_BoardUI.setEndGameMode();

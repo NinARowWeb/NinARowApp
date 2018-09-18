@@ -2,12 +2,10 @@ package Game.Servlet.GameRoom;
 
 import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
-import JavaFX.ColorOnBoardEnum;
 import boards.Board;
 import boards.BoardsManager;
 import com.google.gson.Gson;
 import constants.Constants;
-import responses.BoardGameContentResponse;
 import responses.PlayerDetails;
 import responses.PlayersDetailsResponse;
 

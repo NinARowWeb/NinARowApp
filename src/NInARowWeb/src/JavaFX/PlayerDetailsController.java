@@ -1,6 +1,7 @@
 package JavaFX;
 
 import Engine.EngineGame;
+import Game.Servlet.GameRoom.ColorOnBoardEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
