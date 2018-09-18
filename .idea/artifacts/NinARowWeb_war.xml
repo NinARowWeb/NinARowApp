@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="NinARowWeb:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/NinARowWeb_war</output-path>
-    <root id="archive" name="NinARowWeb_war.war">
-      <element id="artifact" artifact-name="NinARowWeb:war exploded" />
-    </root>
-  </artifact>
-</component>
