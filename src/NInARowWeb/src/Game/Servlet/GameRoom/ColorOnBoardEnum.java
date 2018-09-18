@@ -1,4 +1,4 @@
-package JavaFX;
+package Game.Servlet.GameRoom;
 
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;

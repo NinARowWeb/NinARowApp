@@ -4,7 +4,7 @@ import Engine.BoardCell;
 import Engine.DataHistoryDisc;
 import Engine.EngineGame;
 import Engine.SignOnBoardEnum;
-import JavaFX.ColorOnBoardEnum;
+import Game.Servlet.GameRoom.ColorOnBoardEnum;
 
 import java.awt.Point;
 import java.util.List;
@@ -126,7 +126,7 @@ public class Board {
     }
 
     public List<Point> getWinnersCoordinates(){
-        return Engine.getWinnersTaraget();
+        return Engine.getWinnersTarget();
     }
 
     public int getRegisteredPlayers(){
@@ -146,14 +146,27 @@ public class Board {
         }
     }
 
-    public Point playerMove(int i_Col, boolean i_Popout){
-        Point move = Engine.humanMove(i_Col,i_Popout);
+    public Point ComputerMove() {
+        Point currentMove = null;
+        if (Engine.ComputerTurn(Engine.getTurn())) {
+            currentMove = Engine.computerOperation();
+            finishedTurn(currentMove);
+        }
+        return currentMove;
+    }
+
+    private void finishedTurn(Point move){
         if(move != null) {
             Engine.finishedTurn(move);
             if(Engine.checkFinishedGame()){
                 updateStatus();
             }
         }
+    }
+
+    public Point playerMove(int i_Col, boolean i_Popout){
+        Point move = Engine.humanMove(i_Col,i_Popout);
+        finishedTurn(move);
         return move;
     }
 }
