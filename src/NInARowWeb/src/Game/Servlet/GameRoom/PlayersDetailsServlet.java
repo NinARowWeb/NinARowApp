@@ -2,6 +2,7 @@ package Game.Servlet.GameRoom;
 
 import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
+import JavaFX.ColorOnBoardEnum;
 import boards.Board;
 import boards.BoardsManager;
 import com.google.gson.Gson;
@@ -31,7 +32,7 @@ public class PlayersDetailsServlet extends HttpServlet {
         if (game.isActiveGame()) {
             PlayersDetailsResponse players = new PlayersDetailsResponse(game.getStatus());
             for(int i = 0;i<game.getAmountOfRegistersPlayers();++i){
-                players.addPlayer(new PlayerDetails(game.getPlayerName(i),game.getPlayerType(i),game.getColor(i),game.getPlayerTurns(i)));
+                players.addPlayer(new PlayerDetails(game.getPlayerName(i),game.getPlayerType(i),ColorOnBoardEnum.valueOf(game.getColor(i)).getColor(),game.getPlayerTurns(i)));
             }
             String jsonResponse = gson.toJson(players);
             out.print(jsonResponse);

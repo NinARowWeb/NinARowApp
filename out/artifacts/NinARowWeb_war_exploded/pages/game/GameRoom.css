@@ -34,3 +34,12 @@ html{
 .game-label{
     visibility:hidden;
 }
+
+#playersDetails {
+    top: 3%;
+    height: 90px;
+    width: 250px;
+    border: 1px solid #000000;
+    overflow: auto;
+    visibility: hidden;
+}

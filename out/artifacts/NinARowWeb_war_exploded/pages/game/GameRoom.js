@@ -61,14 +61,16 @@ function getPlayersDetailsContent() {
         success: function (data) {
             if (data.GameActive !== "PRE_GAME") {
                 $("#playersDetails").empty();
+                $("#playersDetails").css({"visibility":"visible"});
                 for (var i = 0; i < data.Players.length; ++i) {
                     var player = $("<div class = 'playerDetails'>");
-                    var name = $("<label class = 'playerName'>").append("Name :" + data.Players[i].PlayerName).append($("<br>"));
-                    var type = $("<label class = 'playerType'>").append("Type :" +data.Players[i].Type).append($("<br>"));
-                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color :" +data.Players[i].Color).append($("<br>"));
-                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played :" +data.Players[i].Turns).append($("<br>"));
-                    var status = $("<label class = 'playerStatus'>").append("Status :" +data.Players[i].Status).append($("<br>"));
-                    player.append(name, type, colorOnBoard, turnsPlayed, status);
+                    var name = $("<label class = 'playerName'>").append("Name: " + data.Players[i].PlayerName).append($("<br>"));
+                    var type = $("<label class = 'playerType'>").append("Type: " +data.Players[i].Type).append($("<br>"));
+                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color: " +data.Players[i].Color).append($("<br>"));
+                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played: " +data.Players[i].Turns).append($("<br>"));
+                    var status = $("<label class = 'playerStatus'>").append("Status: " +data.Players[i].Status).append($("<br>"));
+                    var seperator = $("<hr>");
+                    player.append(name, type, colorOnBoard, turnsPlayed, status,seperator);
                     $("#playersDetails").append(player);
                 }
             }
@@ -132,6 +134,7 @@ function getBoardContent(){
                     {
                         button[0].style.backgroundImage = 'url(' + '../../resources/background.png' + ')';
                     }
+                    button.css({"background-size":"cover"});
                     newBoard.append(button);
                 }
                 newBoard.append($("<br>"));
