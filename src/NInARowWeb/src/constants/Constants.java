@@ -7,6 +7,7 @@ public class Constants {
     public static final String ERROR_UPLOAD_GAME_ERROR = "ErrorUploadGameError";
     public static final String ERROR_LOGIN_MESSAGE = "ErrorLoginMessage";
     public static final String BOARD_GAME = "BoardGame";
+    public static final String UNIQUE_ID = "UniqueID";
 
     //public static final String CHAT_PARAMETER = "userstring";
 

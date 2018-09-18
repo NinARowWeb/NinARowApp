@@ -36,7 +36,7 @@ function getStatisticsContent(){
             $("#Target").append(data.Target);//ToDO: check on children attribute
             $("#Varient").empty();
             $("#Varient").append(data.Varient);
-            if(data.GameActive === "GAMING"){
+            if(data.GameActive !== "PRE_GAME"){
                 $("#Current-name-turn").empty();
                 $("#Current-name-turn").append(data.PlayerNameTurn);
                 $("#Time-elapsed").empty();
@@ -59,16 +59,17 @@ function getPlayersDetailsContent() {
         url: PLAYERS_DETAILS_URL,
         dataType: 'json',
         success: function (data) {
-            if (data.GameActive === "GAMING") {
-                $("#playerDetails").empty();
+            if (data.GameActive !== "PRE_GAME") {
+                $("#playersDetails").empty();
                 for (var i = 0; i < data.Players.length; ++i) {
-                    var name = $("<label class = 'playerName'>").append(data.Players[i].PlayerName);
-                    var type = $("<label class = 'playerType'>").append(data.Players[i].Type);
-                    var colorOnBoard = $("<label class = 'playerColor'>").append(data.Players[i].Color);
-                    var turnsPlayed = $("<label class = 'playerTurns'>").append(data.Players[i].Turns);
-                    var status = $("<label class = 'playerStatus'>").append(data.Players[i].Status);
-                    $("#playerDetails").append(name[0]);
-//                    $("#playerDetails").append(name, type, colorOnBoard, turnsPlayed, status);
+                    var player = $("<div class = 'playerDetails'>");
+                    var name = $("<label class = 'playerName'>").append("Name :" + data.Players[i].PlayerName).append($("<br>"));
+                    var type = $("<label class = 'playerType'>").append("Type :" +data.Players[i].Type).append($("<br>"));
+                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color :" +data.Players[i].Color).append($("<br>"));
+                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played :" +data.Players[i].Turns).append($("<br>"));
+                    var status = $("<label class = 'playerStatus'>").append("Status :" +data.Players[i].Status).append($("<br>"));
+                    player.append(name, type, colorOnBoard, turnsPlayed, status);
+                    $("#playersDetails").append(player);
                 }
             }
         }
@@ -81,7 +82,7 @@ function getHistoryContent(){
         data: "Index=" + historyIndex,
         dataType: 'json',
         success:function(data){
-            if(data.GameActive === "GAMING" && data.HistoryMoves && data.index !== historyIndex){
+            if(data.GameActive !== "PRE_GAME" && data.HistoryMoves && data.index !== historyIndex){
                 $("#History").css({"visibility":"visible"});
                 $.each(data.HistoryMoves || [], appendHistoryContent);
                 historyIndex = data.index;
@@ -135,11 +136,20 @@ function getBoardContent(){
                 }
                 newBoard.append($("<br>"));
             }
+            if(data.GameStatus === "END_GAME")
+                setWinnersAnimation(data);
             if(data.GameStatus === "PRE_GAME" && data.ActiveGame === "Yes"){
                 startGame();
             }
         }
     })
+}
+
+function setWinnersAnimation(data){
+    var Board = $("#board");
+    for(var i = 0; i< data.WinnersPoints.length;++i){
+        Board[0].children[(data.Cols + 1)*data.WinnersPoints[i].y + data.WinnersPoints[i].x].setAttribute("id","Winner-Button");
+    }
 }
 
 function playerMove(button,popout){
@@ -152,12 +162,17 @@ function playerMove(button,popout){
         },
         method: "POST",
         success:function(data){
-            if(data){
-                $("#error-move-message").empty();
+            $("#error-move-message").empty();
+            if(data !== "null"){
                 $("#error-move-message").append(data);
+                setTimeout(clearErrorMessage(),10000);
             }
         }
     })
+}
+
+function clearErrorMessage(){
+    $("#error-move-message").empty();
 }
 
 function startGame(){

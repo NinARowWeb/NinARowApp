@@ -81,10 +81,9 @@ function createUser(index,dataJson) {
 function enterGame(gameForm){
     var currentGame = $('#lobby-games')[0].children[0].children[gameForm.getAttribute('index')].children[1].innerHTML;
     $.ajax({
-        url: ENTER_GAME_URL,
         method: "POST",
-        data: {"gamename" : currentGame},
-//        dataType: 'text',//TODO: check why json dataType crashing
+        url: ENTER_GAME_URL,
+        data: {gamename: currentGame},
         success: function(response){
             window.location = "/NinARow/pages/game/GameRoom.html";
         }

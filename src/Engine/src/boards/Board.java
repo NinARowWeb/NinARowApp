@@ -6,7 +6,8 @@ import Engine.EngineGame;
 import Engine.SignOnBoardEnum;
 import JavaFX.ColorOnBoardEnum;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 
 public class Board {
     private final String GameName;
@@ -123,7 +124,19 @@ public class Board {
         }
         return null;
     }
-    
+
+    public List<Point> getWinnersCoordinates(){
+        return Engine.getWinnersTaraget();
+    }
+
+    public int getRegisteredPlayers(){
+        return RegisteredPlayers;
+    }
+
+    public int getCurrentPlayerUniqueID(){
+        return Engine.getUniqueID();
+    }
+
     public void addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
         Engine.addPlayer(i_RegisterPlayerName,i_IsComputerPlayer,RegisteredPlayers);
         RegisteredPlayers++;
