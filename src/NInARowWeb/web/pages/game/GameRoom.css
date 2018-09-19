@@ -1,3 +1,12 @@
+@keyframes winner_Animation {
+    0%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 html{
     background: #87CEEB;
 }
@@ -42,4 +51,10 @@ html{
     border: 1px solid #000000;
     overflow: auto;
     visibility: hidden;
+}
+
+#Winner-Button{
+    width:40px;
+    height:40px;
+    animation: winner_Animation 4s infinite;
 }
