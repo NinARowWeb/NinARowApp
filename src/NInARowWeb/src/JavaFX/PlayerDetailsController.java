@@ -1,6 +1,7 @@
 package JavaFX;
 
 import Engine.EngineGame;
+import constants.ColorOnBoardEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -45,7 +46,7 @@ public class PlayerDetailsController implements Controller {
             VBox currentPlayer = (VBox) PlayerDetails.getChildren().get(i);
             if (((Label) ((HBox) (currentPlayer.getChildren().get(5))).getChildren().get(1)).getText().equals("Playing")) {
                 ((Label) ((HBox) (currentPlayer.getChildren().get(0))).getChildren().get(1)).setText(Integer.toString(m_Engine.getPlayerTurnPlayed(turn)));
-                ((Label) ((HBox) (currentPlayer.getChildren().get(1))).getChildren().get(1)).setText(m_Engine.getPlayerTurnName(turn));
+       //         ((Label) ((HBox) (currentPlayer.getChildren().get(1))).getChildren().get(1)).setText(m_Engine.getPlayerTurnName(turn));
                 ((Label) ((HBox) (currentPlayer.getChildren().get(2))).getChildren().get(1)).setText(Short.toString(m_Engine.getPlayerTurnId(turn)));
                 ((Label) ((HBox) (currentPlayer.getChildren().get(3))).getChildren().get(1)).setText(ColorOnBoardEnum.valueOf((m_Engine.getPlayerTypeName(turn))).getColor());
                 ((Label) ((HBox) (currentPlayer.getChildren().get(4))).getChildren().get(1)).setText(m_Engine.ComputerTurn(turn) == true ? "Computer" : "Human Player");

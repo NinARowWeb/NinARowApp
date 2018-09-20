@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @WebServlet(name = "HistoryServlet", urlPatterns = {"/History"})
 public class HistoryServlet extends HttpServlet {
@@ -27,7 +30,21 @@ public class HistoryServlet extends HttpServlet {
         Board game = manager.getGameBoard(boardName);
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        String jsonResponse;
-        jsonResponse = gson.toJson(new HistoryContentResponse(game.getLastMove(),game.getLastMoveIndex()));
+        int index = Integer.parseInt(request.getParameter("Index"));
+        String jsonResponse = null;
+        List<String> subListHistoryMove = createCustomHistory(index,game.getLastMoveIndex(),game);
+        if(game.getStatus() == "GAMING") {
+            jsonResponse = gson.toJson(new HistoryContentResponse(subListHistoryMove, game.getLastMoveIndex(),game.getStatus()));
+            //TODO: take care in retire details
+            out.write(jsonResponse);
+        }
+    }
+
+    private List<String> createCustomHistory(int i_Index,int i_HistoryItemsSize, Board game){
+        List<String> subListHistoryMoves = new LinkedList<>();
+        for(int i = i_Index;i< i_HistoryItemsSize;++i){
+            subListHistoryMoves.add(game.getHistoryMove(i));
+        }
+        return subListHistoryMoves;
     }
 }

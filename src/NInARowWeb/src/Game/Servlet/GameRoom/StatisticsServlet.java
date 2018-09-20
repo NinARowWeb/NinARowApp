@@ -29,10 +29,10 @@ public class StatisticsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String jsonResponse;
-        if(game.getStatus() == "Gamimg")
-            jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()),game.getTime(),game.getTarget(),game.getVarient(),game.getPlayerName((game.getTurn() + 1)%game.getAmountOfRegistersPlayers())));
+        if(game.getStatus() == "GAMING")
+            jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()),game.getTime(),game.getTarget(),game.getVarient(),game.getPlayerName((game.getTurn() + 1)%game.getAmountOfRegistersPlayers()),game.getStatus()));
         else
-            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null));
+            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null,game.getStatus()));
         out.print(jsonResponse);
     }
 }

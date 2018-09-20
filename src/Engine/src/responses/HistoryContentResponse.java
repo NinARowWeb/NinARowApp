@@ -1,11 +1,15 @@
 package responses;
 
-public class HistoryContentResponse {
-    private String LastMove;
-    private int index;
+import java.util.List;
 
-    public HistoryContentResponse(String i_LastMove, int i_Index){
-        LastMove = i_LastMove;
+public class HistoryContentResponse {
+    private int index;
+    private String GameActive;
+    private List<String> HistoryMoves;
+
+    public HistoryContentResponse(List<String> i_HistoryMoves, int i_Index,String i_Status){
+        HistoryMoves = i_HistoryMoves;
         index = i_Index;
+        GameActive = i_Status;
     }
 }

@@ -4,6 +4,7 @@ import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
 import boards.Board;
 import boards.BoardsManager;
+import com.google.gson.Gson;
 import constants.Constants;
 
 import javax.servlet.ServletException;
@@ -22,8 +23,8 @@ public class EnterGameServlet extends HttpServlet {
         Board game = manager.getGameBoard(request.getParameter("gamename"));
         String registerPlayerName = SessionUtils.getAttribute(request,Constants.USERNAME);
         boolean isComputerPlayer = SessionUtils.getAttribute(request,Constants.TYPE) == "true";
+        SessionUtils.setAttribute(request,Constants.UNIQUE_ID,Integer.toString(game.getRegisteredPlayers()));
         game.addPlayer(registerPlayerName,isComputerPlayer);
         SessionUtils.setAttribute(request,Constants.BOARD_GAME,request.getParameter("gamename"));
-/*        response.sendRedirect(Constants.GAME_ROOM_URL);*/
     }
 }

@@ -1,5 +1,18 @@
+@keyframes winner_Animation {
+    0%{
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 html{
     background: #87CEEB;
+}
+
+#body-content{
+    margin-bottom: 200%;
 }
 
 #board-cell-button{
@@ -13,18 +26,25 @@ html{
     top: 5%;
 }
 
+#Waiting-message{
+    position: fixed;
+    left: 20%;
+}
+
 #board{
     position: fixed;
     left: 20%;
     top: 20%;
+    margin-bottom: 200%;
 }
 
-#History{
-     height:120px;
-     width:250px;
-     border:1px solid #000000;
-     overflow:auto;
- }
+#History {
+    height: 120px;
+    width: 250px;
+    border: 1px solid #000000;
+    overflow: auto;
+    visibility: hidden;
+}
 
 #History History-List{
     left: 0px;
@@ -32,4 +52,19 @@ html{
 
 .game-label{
     visibility:hidden;
+}
+
+#playersDetails {
+    top: 3%;
+    height: 90px;
+    width: 250px;
+    border: 1px solid #000000;
+    overflow: auto;
+    visibility: hidden;
+}
+
+#Winner-Button{
+    width:40px;
+    height:40px;
+    animation: winner_Animation 0.5s infinite;
 }

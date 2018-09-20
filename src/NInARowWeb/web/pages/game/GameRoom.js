@@ -1,9 +1,12 @@
 var USER = buildUrlWithContextPath("users");
 var BOARD_GAME_URL = buildUrlWithContextPath("BoardGame");
 var STATISTICS_URL = buildUrlWithContextPath("Statistics");
-var HISTORY_URL = buildUrlWithContextPath("history");
-var PLAYERS_DETAILS_URL = buildUrlWithContextPath("playersDetails");
-var historyIndex = -1;
+var HISTORY_URL = buildUrlWithContextPath("History");
+var PLAYERS_DETAILS_URL = buildUrlWithContextPath("PlayersDetails");
+var START_GAME_URL = buildUrlWithContextPath("StartGame");
+var PLAYER_MOVE_URL = buildUrlWithContextPath("PlayerMove");
+var COMPUTER_MOVE_URL = buildUrlWithContextPath("ComputerMove");
+var historyIndex = 0;
 
 $(function () {
     $.ajax({
@@ -34,57 +37,69 @@ function getStatisticsContent(){
             $("#Target").append(data.Target);//ToDO: check on children attribute
             $("#Varient").empty();
             $("#Varient").append(data.Varient);
-            if(data.gameStatus === "Gaming"){
+            if(data.GameActive !== "PRE_GAME"){
+                $("#Waiting-message").empty();
                 $("#Current-name-turn").empty();
                 $("#Current-name-turn").append(data.PlayerNameTurn);
                 $("#Time-elapsed").empty();
                 $("#Time-elapsed").append(data.Time);
                 $("#Next-Player").empty();
                 $("#Next-Player").append(data.NextPlayerName);
+                if($(".game-label")[0].style.visibility !== "visible")
+                    $.each($(".game-label") || [], setVisible)
             }
         }
     })
+}
+
+function setVisible(index,data){
+    data.style.visibility = "visible";
 }
 
 function getPlayersDetailsContent() {
     $.ajax({
         url: PLAYERS_DETAILS_URL,
         dataType: 'json',
-        success:function(data){
-                if(data.gameActive) {
-                    $("#playersDetails").empty();
-                    var currentPlayer = $("<div class = 'playerDetails'>");
-                    for (var i = 0; i < data.amountOfPlayers; ++i) {
-                        var name = $("<label class = 'playerName'>data.players[i].playerName");
-                        var type = $("<label class = 'playerType'>data.players[i].type");
-                        var colorOnBoard = $("<label class = 'playerColor'>data.players[i].color");
-                        var turnsPlayed = $("<label class = 'playerTurns'>data.players[i].turns");
-                        var status = $("<label class = 'playerStatus'>data.players[i].status");
-                        currentPlayer.append(name, type, colorOnBoard, turnsPlayed, status);
-                    }
-                    $("playersDetails").append(currentPlayer);
+        success: function (data) {
+            if (data.GameActive !== "PRE_GAME") {
+                $("#playersDetails").empty();
+                $("#playersDetails").css({"visibility":"visible"});
+                for (var i = 0; i < data.Players.length; ++i) {
+                    var player = $("<div class = 'playerDetails'>");
+                    var name = $("<label class = 'playerName'>").append("Name :" + data.Players[i].PlayerName).append($("<br>"));
+                    var type = $("<label class = 'playerType'>").append("Type :" +data.Players[i].Type).append($("<br>"));
+                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color :" +data.Players[i].Color).append($("<br>"));
+                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played :" +data.Players[i].Turns).append($("<br>"));
+                    var status = $("<label class = 'playerStatus'>").append("Status :" +data.Players[i].Status).append($("<br>"));
+                    var seperator = $("<hr>");
+                    player.append(name, type, colorOnBoard, turnsPlayed, status,seperator);
+                    $("#playersDetails").append(player);
                 }
+            }
         }
     })
-
 }
 
 function getHistoryContent(){
     $.ajax({
         url: HISTORY_URL,
+        data: "Index=" + historyIndex,
         dataType: 'json',
         success:function(data){
-            if(data.lastMove && data.index !== historyIndex){
-                var newHistoryItem = $("<li class ='History-Item'>")
-                newHistoryItem[0].innerHTML = data.lastMove;
-                $("#History-List").append(newHistoryItem);
+            if(data.GameActive !== "PRE_GAME" && data.HistoryMoves && data.index !== historyIndex){
+                $("#History").css({"visibility":"visible"});
+                $.each(data.HistoryMoves || [], appendHistoryContent);
                 historyIndex = data.index;
             }
         }
     })
 }
 
-
+function appendHistoryContent(index,data) {
+    var newHistoryItem = $("<li class ='History-Item'>")
+    newHistoryItem[0].innerHTML = data;
+    $("#History-List").append(newHistoryItem);
+}
 
 function getBoardContent(){
     $.ajax({
@@ -98,11 +113,21 @@ function getBoardContent(){
             for (row = 0; row < data.Rows; row++) {
                 for(col = 0; col < data.Cols; col++){
                     var button;
-                    if(data.gameStatus === "Gaming" &&(row === 0 || (row === (data.Rows-1) && data.Varient === "POPOUT"))){
-                        button = $("<input id ='board-cell-button' value='' type='submit' >")
+                    if(data.GameStatus === "GAMING" && data.ComputerPlayer === "false") {
+                        if (row === 0) {
+                            button = $("<button id='board-cell-button' onclick='humanPlayerMove(this,false)'>");
+                            button[0].setAttribute("Col",col);
+                        }
+                        else if (row === (data.Rows - 1) && data.Varient === "POPOUT") {
+                            button = $("<button id ='board-cell-button' onclick='humanPlayerMove(this,true)' >");
+                            button[0].setAttribute("Col",col);
+                        }
+                        else {
+                            button = $("<button id ='board-cell-button' type='submit' disabled>")
+                        }
                     }
                     else{
-                        button = $("<input id ='board-cell-button' value='' type='submit' disabled>")
+                            button = $("<button id ='board-cell-button' type='submit' disabled>")
                     }
                     if(data.Board[row][col]){
                         button[0].style.backgroundImage = 'url(../../resources/' + data.Board[row][col].m_Sign +'.png)';
@@ -111,10 +136,69 @@ function getBoardContent(){
                     {
                         button[0].style.backgroundImage = 'url(' + '../../resources/background.png' + ')';
                     }
+                    button.css({"background-size":"cover"});
                     newBoard.append(button);
                 }
                 newBoard.append($("<br>"));
             }
+            if(data.GameStatus === "END_GAME")
+                setWinnersAnimation(data);
+            if(data.GameStatus === "PRE_GAME" && data.ActiveGame === "Yes"){
+                startGame();
+            }
         }
+    })
+}
+
+function setWinnersAnimation(data){
+    var Board = $("#board");
+    for(var i = 0; i< data.WinnersPoints.length;++i){
+        Board[0].children[(data.Cols + 1)*data.WinnersPoints[i].y + data.WinnersPoints[i].x].setAttribute("id","Winner-Button");
+    }
+}
+
+function humanPlayerMove(button,popout){
+    var col = button.getAttribute("Col");
+    $.ajax({
+        url: PLAYER_MOVE_URL,
+        data: {
+            "Col" : col,
+            "Popout" : popout,
+        },
+        method: "POST",
+        success:function(data){
+            if(data !== "null"){
+                $("#error-move-message").append(data);
+                setTimeout(clearErrorMessage(),10000);
+            }
+            else{
+                $("#error-move-message").empty();
+                setTimeout(ComputerMove,1000);
+            }
+        }
+    })
+}
+
+function ComputerMove(){
+    $.ajax({
+        url: COMPUTER_MOVE_URL,
+        method: "POST",
+        success:function(data){
+            if(data !== "null"){
+                setTimeout(ComputerMove(),1000);
+            }
+        }
+    })
+}
+
+function clearErrorMessage(){
+    $("#error-move-message").empty();
+}
+
+function startGame(){
+    $.ajax({
+        url: START_GAME_URL,
+        method: "POST",
+        success:function(data){}
     })
 }
