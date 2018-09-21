@@ -2,6 +2,8 @@ package Game.Utils;
 
 
 import boards.BoardsManager;
+import chat.ChatManager;
+import constants.Constants;
 import users.UserManager;
 
 import javax.servlet.ServletContext;
@@ -41,7 +43,6 @@ public class ServletUtils {
 		return (BoardsManager) servletContext.getAttribute(BOARDS_MANAGER_ATTRIBUTE_NAME);
 	}
 
-/*
 	public static ChatManager getChatManager(ServletContext servletContext) {
 		synchronized (chatManagerLock) {
 			if (servletContext.getAttribute(CHAT_MANAGER_ATTRIBUTE_NAME) == null) {
@@ -59,7 +60,6 @@ public class ServletUtils {
 			} catch (NumberFormatException numberFormatException) {
 			}
 		}
-		return INT_PARAMETER_ERROR;
+		return Constants.INT_PARAMETER_ERROR;
 	}
-	*/
 }

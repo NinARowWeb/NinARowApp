@@ -9,9 +9,8 @@ public class Constants {
     public static final String ERROR_LOGIN_MESSAGE = "ErrorLoginMessage";
     public static final String BOARD_GAME = "BoardGame";
     public static final String UNIQUE_ID = "UniqueID";
-
-    //public static final String CHAT_PARAMETER = "userstring";
-
+    public static final String CHAT_VERSION_PARAMETER = "chatversion";
+    public static final String CHAT_PARAMETER = "userstring";
     public static final String LOBBY_ROOM_URL = "/NinARow/pages/lobbyRoom/lobbyArea.html";
     public static final String GAME_ROOM_URL = "pages/game/game.html";
 
