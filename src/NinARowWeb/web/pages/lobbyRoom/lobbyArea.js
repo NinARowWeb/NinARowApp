@@ -29,7 +29,7 @@ $(function () {
             $("#lobby-player-name").append("Hello " + data);
         }
     });
-    setInterval(ajaxGetContent,2000);
+    setInterval(ajaxGetContent,1000);
 });
 
 function ajaxGetContent(){
@@ -85,7 +85,13 @@ function enterGame(gameForm){
         url: ENTER_GAME_URL,
         data: {gamename: currentGame},
         success: function(response){
-            window.location = "/NinARow/pages/game/GameRoom.html";
+            if(response)
+            {
+                $("#error-message").empty();
+                $("#error-message").append(response);
+            }
+            else
+                window.location = "/NinARow/pages/game/GameRoom.html";
         }
     })
 }
@@ -108,7 +114,6 @@ function createBoard(index,dataJson){
             enterGameButton = $("<input id ='enter-game-button' value='Join' disabled type='submit'>");
         else
             enterGameButton = $("<input id ='enter-game-button' value='Join' type='submit'>");
-        //enterGameButton[0].innerHTML = "Join";
         enterGame.append(enterGameButton);
         gameForm.append(enterGame);
         newBoard.append(gameForm);

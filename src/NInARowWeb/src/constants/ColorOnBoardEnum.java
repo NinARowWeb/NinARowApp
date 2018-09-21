@@ -1,4 +1,4 @@
-package Game.Servlet.GameRoom;
+package constants;
 
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;

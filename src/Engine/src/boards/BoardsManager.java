@@ -33,7 +33,7 @@ public class BoardsManager {
         return m_BoardsGame.get(i_GameName);
     }
 
-    public boolean isUserExists(String i_GameName) {
+    public synchronized boolean isUserExists(String i_GameName) {
         return m_BoardsGame.containsKey(i_GameName);
     }
 

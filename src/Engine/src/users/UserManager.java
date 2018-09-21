@@ -37,7 +37,7 @@ public class UserManager {
         return usersSet;
     }
 
-    public boolean isUserExists(String username) {
+    public synchronized boolean isUserExists(String username) {
         for(User current:  usersSet){
             if(current.getName().equals(username)){
                 return true;

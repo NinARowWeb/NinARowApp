@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(name = "EnterGameServlet", urlPatterns = {"/EnterGame"})
 public class EnterGameServlet extends HttpServlet {
@@ -20,11 +21,19 @@ public class EnterGameServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BoardsManager manager = ServletUtils.getBoardsManager(getServletContext());
-        Board game = manager.getGameBoard(request.getParameter("gamename"));
+        Board game = manager.getGameBoard(request.getParameter(Constants.GAME_NAME));
         String registerPlayerName = SessionUtils.getAttribute(request,Constants.USERNAME);
         boolean isComputerPlayer = SessionUtils.getAttribute(request,Constants.TYPE) == "true";
         SessionUtils.setAttribute(request,Constants.UNIQUE_ID,Integer.toString(game.getRegisteredPlayers()));
-        game.addPlayer(registerPlayerName,isComputerPlayer);
-        SessionUtils.setAttribute(request,Constants.BOARD_GAME,request.getParameter("gamename"));
+        boolean successUpload = game.addPlayer(registerPlayerName,isComputerPlayer);
+        if(successUpload)
+            SessionUtils.setAttribute(request,Constants.BOARD_GAME,request.getParameter(Constants.GAME_NAME));
+        else
+        {
+            try(PrintWriter out = response.getWriter()){
+                out.println("You cannot enter to this game");
+                out.flush();
+            }
+        }
     }
 }

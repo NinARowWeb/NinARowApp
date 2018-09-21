@@ -137,7 +137,7 @@ public class EngineGame implements CommandsInterface, Serializable {
     }
 
     private void addDisc(Point i_LastMove,boolean i_Popout){
-        m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(m_Turn).getName(),i_LastMove,m_RegisterPlayers.get(m_Turn).getSignOnBoard(),i_Popout));
+        m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(m_Turn).getName(),i_LastMove,m_RegisterPlayers.get(m_Turn).getSignOnBoard(),i_Popout,false));
     }
 
     private void removeLastDisc(){
@@ -218,6 +218,7 @@ public class EngineGame implements CommandsInterface, Serializable {
                 }
             }
         }
+        m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(index).getName(),null,m_RegisterPlayers.get(index).getSignOnBoard(),false,true));
         m_RegisterPlayers.remove(m_Turn);
         if(m_Turn == m_RegisterPlayers.size())
             m_Turn = 0;
@@ -382,5 +383,9 @@ public class EngineGame implements CommandsInterface, Serializable {
     @Override
     public void saveGame(ObjectOutputStream i_DataOut) throws IOException {
         i_DataOut.writeObject(this);
+    }
+
+    public DataHistoryDisc getMoveByIndex(int i_Index){
+        return m_HistoryMoves.get(i_Index);
     }
 }
