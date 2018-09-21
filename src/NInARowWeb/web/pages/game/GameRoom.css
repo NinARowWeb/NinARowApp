@@ -61,5 +61,5 @@ html{
 #Winner-Button{
     width:40px;
     height:40px;
-    animation: winner_Animation 0.5s infinite;
+    animation: winner_Animation 4s infinite;
 }

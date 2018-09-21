@@ -4,7 +4,7 @@ import Engine.BoardCell;
 import Engine.DataHistoryDisc;
 import Engine.EngineGame;
 import Engine.SignOnBoardEnum;
-import constants.ColorOnBoardEnum;
+import Game.Servlet.GameRoom.ColorOnBoardEnum;
 
 import java.awt.Point;
 import java.util.List;
