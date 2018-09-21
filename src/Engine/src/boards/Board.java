@@ -13,6 +13,7 @@ public class Board {
     private final String GameName;
     private final String CreatedUserName;
     private int RegisteredPlayers;
+    private int HumanPlayers;
     private String RegisteredPlayersToResponse;
     private final int CapacityOfPlayers;
     private final EngineGame Engine;
@@ -26,12 +27,13 @@ public class Board {
         CreatedUserName = i_CreatedUserName;
         CapacityOfPlayers = i_CapacityOfPlayers;
         RegisteredPlayers = 0;
-        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
+        updateRegisteredPlayerResponse();
         Engine = i_Engine;
         ActiveGame = "No";
         Target = Engine.getSequence();
         BoardSize = Engine.getRows() + "X" + Engine.getMaxCol();
         Status = i_Status;
+        HumanPlayers = 0;
     }
 
     public void startGame(){
@@ -137,13 +139,22 @@ public class Board {
         return Engine.getUniqueID();
     }
 
-    public void addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
+    public boolean addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
+        if(i_IsComputerPlayer && HumanPlayers == 0 && (1 + RegisteredPlayers == CapacityOfPlayers))
+            return false;
+        if(!i_IsComputerPlayer)
+            HumanPlayers++;
         Engine.addPlayer(i_RegisterPlayerName,i_IsComputerPlayer,RegisteredPlayers);
         RegisteredPlayers++;
-        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
+        updateRegisteredPlayerResponse();
         if(RegisteredPlayers == CapacityOfPlayers){
             ActiveGame = "Yes";
         }
+        return true;
+    }
+
+    private void updateRegisteredPlayerResponse() {
+        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
     }
 
     public Point ComputerMove() {
@@ -168,5 +179,24 @@ public class Board {
         Point move = Engine.humanMove(i_Col,i_Popout);
         finishedTurn(move);
         return move;
+    }
+
+    private void restartGame(){
+        ActiveGame = "No";
+        Engine.restartGame();
+        updateStatus();
+    }
+
+    public void quitGame(int i_UniqueID,boolean computerPlayer){
+        if(Status == "GAMING")
+            Engine.quitGame(i_UniqueID);
+        RegisteredPlayers--;
+        updateRegisteredPlayerResponse();
+        if(!computerPlayer)
+            RegisteredPlayers--;
+        if(RegisteredPlayers == 0){
+            restartGame();
+        }
+
     }
 }

@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="GameRoom.css"></head>
-    <script src="../../common/jquery-2.0.3.min.js"></script>
-    <script src="../../common/context-path-helper.js"></script>
-    <script src="GameRoom.js"></script>
+<script src="../../common/jquery-2.0.3.min.js"></script>
+<script src="../../common/context-path-helper.js"></script>
+<script src="GameRoom.js"></script>
 </head>
 <body>
-    <form action ="logoutGame" method="POST">
+    <form action ="/NinARow/LogoutGame" method="POST">
         <input type="submit" value = "Logout"/>
     </form>
+    <h1 id="Waiting-message">Waiting for others players...</h1>
     <h3 id = "player-session-name"></h3>
     <div id="sidebar">
         <div id = "Statistics">

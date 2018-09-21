@@ -1,6 +1,6 @@
 @keyframes winner_Animation {
     0%{
-        opacity: 0;
+        opacity: 0.2;
     }
     100% {
         opacity: 1;
@@ -20,6 +20,11 @@ html{
     position: fixed;
     left: 4%;
     top: 5%;
+}
+
+#Waiting-message{
+    position: fixed;
+    left: 20%;
 }
 
 #board{
@@ -56,5 +61,5 @@ html{
 #Winner-Button{
     width:40px;
     height:40px;
-    animation: winner_Animation 4s infinite;
+    animation: winner_Animation 0.5s infinite;
 }
