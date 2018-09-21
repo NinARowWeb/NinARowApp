@@ -2,6 +2,10 @@ html{
     background: #87CEEB;
 }
 
+body{
+    font-family: Calibri, sans-serif;
+}
+
 #login-page-wrapper {
     position: absolute;
     left: 50%;
