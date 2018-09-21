@@ -11,6 +11,12 @@ html{
     background: #87CEEB;
 }
 
+body{
+    min-width:500px;
+    min-height: 500px;
+    overflow: auto;
+}
+
 #board-cell-button{
     width:40px;
     height:40px;
@@ -31,6 +37,7 @@ html{
     position: fixed;
     left: 20%;
     top: 20%;
+    overflow: auto;
 }
 
 #History {
@@ -45,7 +52,7 @@ html{
     left: 0px;
 }
 
-.game-label{
+.game-label, .title-label{
     visibility:hidden;
 }
 
@@ -61,5 +68,5 @@ html{
 #Winner-Button{
     width:40px;
     height:40px;
-    animation: winner_Animation 4s infinite;
+    animation: winner_Animation 0.5s infinite;
 }

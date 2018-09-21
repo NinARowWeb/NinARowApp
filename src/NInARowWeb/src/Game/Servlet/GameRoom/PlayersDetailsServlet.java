@@ -5,6 +5,7 @@ import Game.Utils.SessionUtils;
 import boards.Board;
 import boards.BoardsManager;
 import com.google.gson.Gson;
+import constants.ColorOnBoardEnum;
 import constants.Constants;
 import responses.PlayerDetails;
 import responses.PlayersDetailsResponse;

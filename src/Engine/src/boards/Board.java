@@ -1,10 +1,7 @@
 package boards;
 
-import Engine.BoardCell;
-import Engine.DataHistoryDisc;
-import Engine.EngineGame;
-import Engine.SignOnBoardEnum;
-import Game.Servlet.GameRoom.ColorOnBoardEnum;
+import Engine.*;
+import constants.ColorOnBoardEnum;
 
 import java.awt.Point;
 import java.util.List;
@@ -13,6 +10,7 @@ public class Board {
     private final String GameName;
     private final String CreatedUserName;
     private int RegisteredPlayers;
+    private int HumanPlayers;
     private String RegisteredPlayersToResponse;
     private final int CapacityOfPlayers;
     private final EngineGame Engine;
@@ -26,12 +24,13 @@ public class Board {
         CreatedUserName = i_CreatedUserName;
         CapacityOfPlayers = i_CapacityOfPlayers;
         RegisteredPlayers = 0;
-        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
+        updateRegisteredPlayerResponse();
         Engine = i_Engine;
         ActiveGame = "No";
         Target = Engine.getSequence();
         BoardSize = Engine.getRows() + "X" + Engine.getMaxCol();
         Status = i_Status;
+        HumanPlayers = 0;
     }
 
     public void startGame(){
@@ -75,12 +74,16 @@ public class Board {
     }
 
     public String getHistoryMove(int i_Index){
-        String lastMoveMessage;
         if(Engine.getAmountOfMoves() > 0) {
-            DataHistoryDisc lastMove = Engine.getLastMove();
-            SignOnBoardEnum currentSign = purseSign(lastMove.getSign());
-            return " " + lastMove.getName() + ", Color: " + ColorOnBoardEnum.valueOf((currentSign.name())).getColor() +
-                    ", " + (lastMove.getPopout() ? "Popout: " : "Insert: ") + "(" + (lastMove.getLastMoveCoordinate().y + 1) + "," + (lastMove.getLastMoveCoordinate().x + 1) + ")";
+            DataHistoryDisc lastMove = Engine.getMoveByIndex(i_Index);
+            if (lastMove.getRetiredMove() == false) {
+                SignOnBoardEnum currentSign = purseSign(lastMove.getSign());
+                return " " + lastMove.getName() + ", Color: " + ColorOnBoardEnum.valueOf((currentSign.name())).getColor() +
+                        ", " + (lastMove.getPopout() ? "Popout: " : "Insert: ") + "(" + (lastMove.getLastMoveCoordinate().y + 1) + "," + (lastMove.getLastMoveCoordinate().x + 1) + ")";
+            }
+            else{
+                return " " + lastMove.getName() + ", Retired!" ;
+            }
         }
         return null;
     }
@@ -137,13 +140,23 @@ public class Board {
         return Engine.getUniqueID();
     }
 
-    public void addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
+    public synchronized boolean addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
+        if(i_IsComputerPlayer && HumanPlayers == 0 && (1 + RegisteredPlayers == CapacityOfPlayers) ||
+                RegisteredPlayers == CapacityOfPlayers)
+            return false;
+        if(!i_IsComputerPlayer)
+            HumanPlayers++;
         Engine.addPlayer(i_RegisterPlayerName,i_IsComputerPlayer,RegisteredPlayers);
         RegisteredPlayers++;
-        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
+        updateRegisteredPlayerResponse();
         if(RegisteredPlayers == CapacityOfPlayers){
             ActiveGame = "Yes";
         }
+        return true;
+    }
+
+    private synchronized void updateRegisteredPlayerResponse() {
+        RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
     }
 
     public Point ComputerMove() {
@@ -168,5 +181,48 @@ public class Board {
         Point move = Engine.humanMove(i_Col,i_Popout);
         finishedTurn(move);
         return move;
+    }
+
+    private void restartGame(){
+        ActiveGame = "No";
+        Engine.restartGame();
+    }
+
+    public synchronized void quitGame(int i_UniqueID,boolean computerPlayer){
+        if(Status == "GAMING")
+            Engine.quitGame(i_UniqueID);
+        RegisteredPlayers--;
+        updateRegisteredPlayerResponse();
+        if(!computerPlayer)
+            HumanPlayers--;
+        if(RegisteredPlayers == 0){
+            restartGame();
+        }
+        if(RegisteredPlayers <= 1){
+            updateStatus();
+        }
+    }
+
+    public boolean isComputerTurn(){
+        return Engine.ComputerTurn(Engine.getTurn());
+    }
+
+    public String getWinnersNames() {
+        StringBuilder endGameMessage = new StringBuilder();
+        if(Engine.getWinner().size() != 0) {
+
+            if (Engine.getWinner().size() == 1) {
+                endGameMessage.append(Engine.getWinner().get(0).getName() + " Won!");
+            } else if (Engine.getWinner().size() >= 2) {
+                endGameMessage.append("The winners are: ");
+                for (PlayerEngine currentPlayer : Engine.getWinner()) {
+                    endGameMessage.append(currentPlayer.getName() + ", ");
+                }
+                endGameMessage.substring(0, endGameMessage.length() - 2);
+            } else
+                endGameMessage.append("Draw! The board is full");
+            return endGameMessage.toString();
+        }
+        return null;
     }
 }
