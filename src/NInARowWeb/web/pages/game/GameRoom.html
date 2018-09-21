@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="GameRoom.css"></head>
-<script src="../../common/jquery-2.0.3.min.js"></script>
-<script src="../../common/context-path-helper.js"></script>
-<script src="GameRoom.js"></script>
+    <script src="../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../common/context-path-helper.js"></script>
+    <script src="GameRoom.js"></script>
+    <script src="chatroom.js"></script>
 </head>
 <body>
     <form action ="/NinARow/LogoutGame" method="POST">
@@ -44,7 +45,20 @@
     </div>
     <div id = "error-move-message"></div>
     <div id = "board"></div>
-    <div id = "Chat"></div>
+    <div id = "Chat">
+        <div class="container-fluid">
+            <div class="content">
+                <div id="chatwindow">
+                    <h4>Chat</h4>
+                    <div id="chatarea" class="span6"></div>
+                    <form id="chatform" method="POST" action="SendChat">
+                        <input type="text" id="userstring" name="userstring"/>
+                        <input type="submit" value="Send"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id = "Winners-Message"></div>
 </body>
 </html>
