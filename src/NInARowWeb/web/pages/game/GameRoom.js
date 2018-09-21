@@ -38,6 +38,7 @@ function getStatisticsContent(){
             $("#Varient").empty();
             $("#Varient").append(data.Varient);
             if(data.GameActive !== "PRE_GAME"){
+                $("#Waiting-message").empty();
                 $("#Current-name-turn").empty();
                 $("#Current-name-turn").append(data.PlayerNameTurn);
                 $("#Time-elapsed").empty();
