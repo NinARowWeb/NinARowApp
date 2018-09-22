@@ -1,8 +1,11 @@
 package boards;
 
 import Engine.*;
+import chat.ChatManager;
 import constants.ColorOnBoardEnum;
+import viewers.ViewerManager;
 
+import javax.swing.text.View;
 import java.awt.Point;
 import java.util.List;
 
@@ -12,12 +15,15 @@ public class Board {
     private int RegisteredPlayers;
     private int HumanPlayers;
     private String RegisteredPlayersToResponse;
+    private int ViewersAmount;
     private final int CapacityOfPlayers;
     private final EngineGame Engine;
     private String ActiveGame;
     private int Target;
     private String BoardSize;
     private String Status;
+    private ChatManager Chat;
+    private ViewerManager Viewer;
 
     public Board(String i_GameName, String i_CreatedUserName, int i_CapacityOfPlayers, EngineGame i_Engine, String i_Status){
         GameName = i_GameName;
@@ -31,6 +37,9 @@ public class Board {
         BoardSize = Engine.getRows() + "X" + Engine.getMaxCol();
         Status = i_Status;
         HumanPlayers = 0;
+        Chat = new ChatManager();
+        Viewer = new ViewerManager();
+        ViewersAmount = 0;
     }
 
     public void startGame(){
@@ -140,6 +149,24 @@ public class Board {
         return Engine.getUniqueID();
     }
 
+    public ChatManager getChatManager(){
+        return Chat;
+    }
+
+    public ViewerManager getViewerManager(){
+        return Viewer;
+    }
+
+    public synchronized void addViewer(String i_RegisterPlayerName){
+        Viewer.addViewer(i_RegisterPlayerName);
+        ViewersAmount++;
+    }
+
+    public synchronized void removeViewer(String i_RegisterPlayerName){
+        Viewer.removeViewer(i_RegisterPlayerName);
+        ViewersAmount--;
+    }
+
     public synchronized boolean addPlayer(String i_RegisterPlayerName, boolean i_IsComputerPlayer) {
         if(i_IsComputerPlayer && HumanPlayers == 0 && (1 + RegisteredPlayers == CapacityOfPlayers) ||
                 RegisteredPlayers == CapacityOfPlayers)
@@ -157,6 +184,10 @@ public class Board {
 
     private synchronized void updateRegisteredPlayerResponse() {
         RegisteredPlayersToResponse = RegisteredPlayers + "/" + CapacityOfPlayers;
+    }
+
+    public int getCapacityOfPlayers(){
+        return CapacityOfPlayers;
     }
 
     public Point ComputerMove() {
@@ -186,6 +217,8 @@ public class Board {
     private void restartGame(){
         ActiveGame = "No";
         Engine.restartGame();
+        Chat = new ChatManager();
+        Viewer = new ViewerManager();
     }
 
     public synchronized void quitGame(int i_UniqueID,boolean computerPlayer){

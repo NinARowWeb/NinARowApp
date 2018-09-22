@@ -31,9 +31,9 @@ public class StatisticsServlet extends HttpServlet {
         String jsonResponse;
         if(game.getStatus() == "GAMING")
             jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()),game.getTime(),game.getTarget(),game.getVarient(),game.getPlayerName((game.getTurn() + 1)%game.getAmountOfRegistersPlayers()),game.getStatus(),
-                    game.isComputerTurn() == true? "Yes" : "No",game.getWinnersNames()));
+                    game.isComputerTurn() == true? "Yes" : "No",game.getWinnersNames(),-1,-1));
         else
-            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null,game.getStatus(),null,game.getWinnersNames()));
+            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null,game.getStatus(),null,game.getWinnersNames(),game.getCapacityOfPlayers(),game.getAmountOfRegistersPlayers()));
         out.print(jsonResponse);
     }
 }

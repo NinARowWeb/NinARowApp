@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>N In A Row</title>
     <link rel="stylesheet" href="GameRoom.css"></head>
-<script src="../../common/jquery-2.0.3.min.js"></script>
-<script src="../../common/context-path-helper.js"></script>
-<script src="GameRoom.js"></script>
+    <script src="../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../common/context-path-helper.js"></script>
+    <script src="GameRoom.js"></script>
+    <script src="chatroom.js"></script>
 </head>
 <body>
     <form action ="/NinARow/LogoutGame" method="POST">
         <input type="submit" value = "Logout"/>
     </form>
-    <h1 id="Waiting-message">Waiting for others players...</h1>
+    <h1 id="Waiting-message"></h1>
     <h3 id = "player-session-name"></h3>
     <div id="sidebar">
         <div id = "Statistics">
@@ -42,9 +43,22 @@
     <div id="History">
         <ol id = "History-List"></ol>
     </div>
-    <div id = "error-move-message"></div>
+    <h1 id = "error-move-message"></h1>
     <div id = "board"></div>
-    <div id = "Chat"></div>
-    <div id = "Winners-Message"></div>
+    <div id = "Chat">
+        <div class="container-fluid">
+            <div class="content">
+                <div id="chatwindow">
+                    <h4>Chat</h4>
+                    <div id="chatarea" class="span6"></div>
+                    <form id="chatform" method="POST" action="SendChat">
+                        <input type="text" id="userstring" name="userstring"/>
+                        <input type="submit" value="Send"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 id = "Winners-Message"></h1>
 </body>
 </html>

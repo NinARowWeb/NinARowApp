@@ -23,7 +23,6 @@ function getContent(){
     getStatisticsContent();
     getPlayersDetailsContent();
     getHistoryContent();
-    //getChatContent();
 }
 
 function getStatisticsContent(){
@@ -35,6 +34,12 @@ function getStatisticsContent(){
             $("#Target").append(data.Target);//ToDO: check on children attribute
             $("#Varient").empty();
             $("#Varient").append(data.Varient);
+            $("#Waiting-message").empty();
+            if(data.GameActive === "PRE_GAME"){
+                var str = data.WaitingMessage.replace("\n","<br>");
+                $("#Waiting-message").append(str);
+//                $("#Waiting-message")[0].innerText.replace("\n","<br>");
+            }
             if(data.GameActive === "GAMING"){
                 $("#Waiting-message").empty();
                 $("#Current-name-turn").empty();
@@ -192,7 +197,6 @@ function humanPlayerMove(button,popout){
             }
         }
     })
-   // ComputerMove();
 }
 
 function ComputerMove(){

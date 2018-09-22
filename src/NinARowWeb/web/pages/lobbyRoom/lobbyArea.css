@@ -2,9 +2,13 @@ html{
     background: #87CEEB;
 }
 
+body{
+    font-family: Calibri, sans-serif;
+}
+
 .lobby-details{
     position: fixed;
-    left: 15%;
+    left: 11%;
 }
 
 #lobby-player-name{
@@ -24,28 +28,39 @@ html{
 }
 
 #lobby-userslist {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     top:10%;
+    content: "•";
+    color: green;
+    font-weight: bold;
 }
 
 .lobby-file-choicer{
     top:20%;
     width: 80px;
+    float: left;
+    margin-right: 4%;
 }
 
 #enter-game-button{
     width: 100%;
+    position:fixed;
 }
 
 .lobby-boards-title{
-    background-color: #3ddadd;
+    background-color: #b0c0bd;
 }
 
 .lobby-boards-game:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #fab017;
 }
 
 .lobby-boards-game:nth-child(odd) {
-    background-color: #ff921d;
+    background-color: #c5d2ff;
+}
+
+#logout-Button {
+    position: fixed;
+    top:5%;
+    left: 90%;
 }
