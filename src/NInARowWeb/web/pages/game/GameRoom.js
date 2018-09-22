@@ -12,8 +12,12 @@ var historyIndex = 0;
 $(function () {
     $.ajax({
         url:USER,
+        dataType: 'json',
         success:function(data){
-            $("#player-session-name").append("Hello " + data);
+            $("#player-session-name").append("Hello " + data.PlayerName);
+            if(data.Viewer !== undefined){
+                $("#Chat").remove();
+            }
         }
     });
     setInterval(getContent,1000);

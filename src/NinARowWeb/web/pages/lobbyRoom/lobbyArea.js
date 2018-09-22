@@ -26,8 +26,9 @@ $(function () {
 
     $.ajax({
         url:USER,
+        dataType: 'json',
         success:function(data){
-            $("#lobby-player-name").append("Hello " + data);
+            $("#lobby-player-name").append("Hello " + data.PlayerName);
         }
     });
     setInterval(ajaxGetContent,1000);

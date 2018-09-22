@@ -1,7 +1,10 @@
 package Game.Servlet;
 
 import Game.Utils.SessionUtils;
+import com.google.gson.Gson;
 import constants.Constants;
+import responses.StatisticsContentResponse;
+import responses.UserDetailsContentResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +19,10 @@ public class UsersAuthServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try(PrintWriter out = response.getWriter()){
-            out.println(SessionUtils.getAttribute(request,Constants.USERNAME));
+            Gson gson = new Gson();
+            String jsonResponse;
+            jsonResponse = gson.toJson(new UserDetailsContentResponse(SessionUtils.getAttribute(request,Constants.USERNAME),SessionUtils.getAttribute(request,Constants.VIEWER)));
+            out.println(jsonResponse);
             out.flush();
         }
     }
