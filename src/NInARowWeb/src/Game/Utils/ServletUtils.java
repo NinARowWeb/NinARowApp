@@ -1,10 +1,12 @@
 package Game.Utils;
 
 
+import boards.Board;
 import boards.BoardsManager;
 import chat.ChatManager;
 import constants.Constants;
 import users.UserManager;
+import viewers.ViewerManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -43,14 +45,18 @@ public class ServletUtils {
 		return (BoardsManager) servletContext.getAttribute(BOARDS_MANAGER_ATTRIBUTE_NAME);
 	}
 
-	public static ChatManager getChatManager(ServletContext servletContext) {
+	public static ChatManager getChatManager(Board gameBoard) {
 		synchronized (chatManagerLock) {
-			if (servletContext.getAttribute(CHAT_MANAGER_ATTRIBUTE_NAME) == null) {
-				servletContext.setAttribute(CHAT_MANAGER_ATTRIBUTE_NAME, new ChatManager());
-			}
+			return gameBoard.getChatManager();
 		}
-		return (ChatManager) servletContext.getAttribute(CHAT_MANAGER_ATTRIBUTE_NAME);
 	}
+
+	public static ViewerManager getViewerManager(Board gameBoard) {
+		synchronized (chatManagerLock) {
+			return gameBoard.getViewerManager();
+		}
+	}
+
 
 	public static int getIntParameter(HttpServletRequest request, String name) {
 		String value = request.getParameter(name);

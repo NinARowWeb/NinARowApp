@@ -2,6 +2,8 @@ package Game.Servlet.GameRoom;
 
 import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
+import boards.Board;
+import boards.BoardsManager;
 import chat.ChatManager;
 import chat.SingleChatEntry;
 import com.google.gson.Gson;
@@ -23,7 +25,10 @@ public class ChatServlet extends HttpServlet {
             throws ServletException, IOException {
         
         response.setContentType("application/json");
-        ChatManager chatManager = ServletUtils.getChatManager(getServletContext());
+        String boardName = SessionUtils.getAttribute(request, Constants.BOARD_GAME);
+        BoardsManager manager = ServletUtils.getBoardsManager(getServletContext());
+        Board game = manager.getGameBoard(boardName);
+        ChatManager chatManager = ServletUtils.getChatManager(game);
         int chatVersion = ServletUtils.getIntParameter(request, Constants.CHAT_VERSION_PARAMETER);
         if (chatVersion > Constants.INT_PARAMETER_ERROR) {
             try (PrintWriter out = response.getWriter()) {

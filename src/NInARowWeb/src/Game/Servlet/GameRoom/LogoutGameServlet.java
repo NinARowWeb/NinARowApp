@@ -26,9 +26,17 @@ public class LogoutGameServlet extends HttpServlet {
         Board game = manager.getGameBoard(boardName);
         String uniqueIDFromSession = SessionUtils.getAttribute(request, Constants.UNIQUE_ID);
         String isComputerFromSession = SessionUtils.getAttribute(request, Constants.TYPE);
-        SessionUtils.removeAttribute(request, Constants.UNIQUE_ID);
+        String isViewer = SessionUtils.getAttribute(request, Constants.VIEWER);
         SessionUtils.removeAttribute(request, Constants.BOARD_GAME);
-        game.quitGame(Integer.parseInt(uniqueIDFromSession),isComputerFromSession == "true"? true : false);
+        if(isViewer != null)
+        {
+            SessionUtils.removeAttribute(request, Constants.VIEWER);
+            game.removeViewer(SessionUtils.getAttribute(request,Constants.USERNAME));
+        }
+        else{
+            SessionUtils.removeAttribute(request, Constants.UNIQUE_ID);
+            game.quitGame(Integer.parseInt(uniqueIDFromSession),isComputerFromSession == "true"? true : false);
+        }
         response.sendRedirect(Constants.LOBBY_ROOM_URL);
     }
 }

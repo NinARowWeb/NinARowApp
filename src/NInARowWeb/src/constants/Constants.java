@@ -2,6 +2,7 @@ package constants;
 
 public class Constants {
     public static final String USERNAME = "username";
+    public static final String VIEWER = "viewer";
     public static final String GAME_NAME = "gamename";
     public static final String TYPE = "type";
     public static final String IS_UPDATE_FILE = "IsUploadFile";

@@ -28,9 +28,10 @@ body{
     top: 5%;
 }
 
-#Waiting-message{
+#Waiting-message, #Winners-Message, #error-move-message{
     position: fixed;
     left: 20%;
+    top: 4%;
 }
 
 #board{

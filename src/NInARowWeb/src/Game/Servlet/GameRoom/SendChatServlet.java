@@ -2,6 +2,8 @@ package Game.Servlet.GameRoom;
 
 import Game.Utils.ServletUtils;
 import Game.Utils.SessionUtils;
+import boards.Board;
+import boards.BoardsManager;
 import chat.ChatManager;
 import constants.Constants;
 
@@ -25,11 +27,11 @@ public class SendChatServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ChatManager chatManager = ServletUtils.getChatManager(getServletContext());
+        String boardName = SessionUtils.getAttribute(request, Constants.BOARD_GAME);
+        BoardsManager manager = ServletUtils.getBoardsManager(getServletContext());
+        Board game = manager.getGameBoard(boardName);
+        ChatManager chatManager = ServletUtils.getChatManager(game);
         String username = SessionUtils.getAttribute(request,Constants.USERNAME);
-        if (username == null) {
-            response.sendRedirect("index.html");
-        }
 
         String userChatString = request.getParameter(Constants.CHAT_PARAMETER);
         if (userChatString != null && !userChatString.isEmpty()) {

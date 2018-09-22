@@ -33,7 +33,7 @@ public class HistoryServlet extends HttpServlet {
         int index = Integer.parseInt(request.getParameter("Index"));
         String jsonResponse = null;
         List<String> subListHistoryMove = createCustomHistory(index,game.getLastMoveIndex(),game);
-        if(game.getStatus() == "GAMING") {
+        if(game.getStatus() != "PRE_GAME") {
             jsonResponse = gson.toJson(new HistoryContentResponse(subListHistoryMove, game.getLastMoveIndex(),game.getStatus()));
             //TODO: take care in retire details
             out.write(jsonResponse);

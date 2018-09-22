@@ -5,13 +5,6 @@ var SEND_CHAT_URL = buildUrlWithContextPath("SendChat");
 
 //users = a list of usernames, essentially an array of javascript strings:
 // ["moshe","nachum","nachche"...]
-function refreshUsersList(users) {
-    $("#userslist").empty();
-    $.each(users || [], function(index, username) {
-        console.log("Adding user #" + index + ": " + username);
-        $('<li>' + username + '</li>').appendTo($("#userslist"));
-    });
-}
 
 //entries = the added chat strings represented as a single string
 function appendToChatArea(entries) {
@@ -27,8 +20,7 @@ function appendChatEntry(index, entry){
 }
 
 function createChatEntry (entry){
-    entry.chatString = entry.chatString.replace (":)", "<span class='smiley'></span>");
-    return $("<span class=\"success\">").append(entry.username + "> " + entry.chatString);
+    return $("<span class=\"success\">").append(entry.username + ": " + entry.chatString);
 }
 
 
