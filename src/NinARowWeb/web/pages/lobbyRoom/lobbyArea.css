@@ -52,11 +52,11 @@ body{
 }
 
 .lobby-boards-game:nth-child(even) {
-    background-color: #fab017;
+    background-color: #ffb11c;
 }
 
 .lobby-boards-game:nth-child(odd) {
-    background-color: #c5d2ff;
+    background-color: #ffd67c;
 }
 
 #logout-Button {
