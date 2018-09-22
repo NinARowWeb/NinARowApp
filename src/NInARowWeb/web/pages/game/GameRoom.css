@@ -14,6 +14,7 @@ html{
 body{
     min-width:500px;
     min-height: 500px;
+    overflow: auto;
 }
 
 #board-cell-button{
@@ -38,12 +39,16 @@ body{
     width: 180px;
     border: 1px solid #000000;
     overflow: auto;
+//    position: fixed;
+//    left: 20%;
+//    top: 4%;
 }
 
 #board{
     position: absolute;
     left: 20%;
     top: 20%;
+    overflow: auto;
 }
 
 #History {

@@ -7,6 +7,8 @@ import viewers.Viewer;
 import java.util.List;
 import java.util.Set;
 
+import java.util.List;
+
 public class StatisticsContentResponse {
     private String PlayerNameTurn;
     private String Time;

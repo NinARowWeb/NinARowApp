@@ -122,6 +122,7 @@ function createBoard(index,dataJson){
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.GameName));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.CreatedUserName));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.RegisteredPlayersToResponse));
+        newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ViewersAmount));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.BoardSize));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.Target));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ActiveGame.toString()));

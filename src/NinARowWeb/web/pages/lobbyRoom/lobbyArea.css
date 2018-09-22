@@ -9,7 +9,7 @@ body{
 }
 
 .lobby-details{
-    position: absolute;
+    position: fixed;
     left: 11%;
 }
 
@@ -50,6 +50,7 @@ body{
 
 #enter-game-button, #view-game-button{
     width: 100%;
+    position:fixed;
 }
 
 .lobby-boards-title{
@@ -65,7 +66,7 @@ body{
 }
 
 #logout-Button {
-    position: absolute;
+    position: fixed;
     top:5%;
     left: 90%;
 }
