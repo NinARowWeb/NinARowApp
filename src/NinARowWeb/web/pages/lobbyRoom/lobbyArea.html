@@ -16,6 +16,13 @@
 </div>
 <div class="lobby-details">
     <h1 id="lobby-player-name"></h1>
+    <form id = "lobby-form">
+        <input class="lobby-file-choicer" type="file" value="file choicer" accept=".xml"/>
+        <input id = "upload-Game" type="Submit" value="Upload File"><br><br>
+    </form>
+    <form id = "logout-form" action="/NinARow/logoutLobby" method="POST">
+        <input id ="logout-Button" type="submit" value="Logout">
+    </form>
     <table id = "lobby-games">
         <tr class = "lobby-boards-titles">
             <th class="lobby-col-title">Number</th>
@@ -26,16 +33,11 @@
             <th class="lobby-col-title">Target</th>
             <th class="lobby-col-title">Active</th>
             <th class="lobby-col-title">Join Game</th>
+            <th class="lobby-col-title">Viewers</th>
+            <th class="lobby-col-title">View Game</th>
         </tr>
     </table>
     <br>
-    <form id = "lobby-form">
-        <input class="lobby-file-choicer" type="file" value="file choicer" accept=".xml"/><br>
-        <input id = "upload-Game" type="Submit" value="Upload File"><br>
-    </form>
-    <form id = "logout-form" action="/NinARow/logoutLobby" method="POST">
-        <input id ="logout-Button" type="submit" value="Logout">
-    </form>
     <div id ="error-message"></div>
 </div>
 </body>

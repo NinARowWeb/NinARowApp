@@ -3,7 +3,7 @@ package JavaFX;
 import Engine.DataHistoryDisc;
 import Engine.EngineGame;
 import Engine.SignOnBoardEnum;
-import Game.Servlet.GameRoom.ColorOnBoardEnum;
+import constants.ColorOnBoardEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 

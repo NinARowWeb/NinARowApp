@@ -11,6 +11,12 @@ html{
     background: #87CEEB;
 }
 
+body{
+    min-width:500px;
+    min-height: 500px;
+    overflow: auto;
+}
+
 #board-cell-button{
     width:40px;
     height:40px;
@@ -22,15 +28,24 @@ html{
     top: 5%;
 }
 
-#Waiting-message{
+#Waiting-message, #Winners-Message, #error-move-message{
     position: fixed;
     left: 20%;
+    top: 4%;
+}
+
+#viwers-userslist{
+    height: 120px;
+    width: 180px;
+    border: 1px solid #000000;
+    overflow: auto;
 }
 
 #board{
     position: fixed;
     left: 20%;
     top: 20%;
+    overflow: auto;
 }
 
 #History {
@@ -45,7 +60,7 @@ html{
     left: 0px;
 }
 
-.game-label{
+.game-label, .title-label{
     visibility:hidden;
 }
 
@@ -61,5 +76,34 @@ html{
 #Winner-Button{
     width:40px;
     height:40px;
-    animation: winner_Animation 4s infinite;
+    animation: winner_Animation 0.5s infinite;
+}
+
+#chatwindow{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 15%;
+}
+
+#chatarea{
+    flex-grow: 1;
+    background: #f3f3f3;
+    border: 1px solid #ccc;
+    margin: 3px;
+    padding: 8px;
+    list-style-type: none;
+    margin: 0 0 8px 0;
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+}
+
+#chatform{
+    margin-bottom: 8px;
+    width: 100%;
+    display: flex;
+    flex-grow: 0;
+    margin: 0 2px 0 5px;
 }

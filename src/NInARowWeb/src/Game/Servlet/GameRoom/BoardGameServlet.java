@@ -26,7 +26,7 @@ public class BoardGameServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String jsonResponse = gson.toJson(new BoardGameContentResponse(game.getBoard(),game.getRows(),game.getCols(),game.getVarient(),game.isActiveGame()? "Yes" : "No",game.getStatus(),
-                SessionUtils.getAttribute(request,Constants.TYPE),game.getWinnersCoordinates()));
+                SessionUtils.getAttribute(request,Constants.TYPE),game.getWinnersCoordinates(),SessionUtils.getAttribute(request,Constants.VIEWER)));
         out.print(jsonResponse);
     }
 }

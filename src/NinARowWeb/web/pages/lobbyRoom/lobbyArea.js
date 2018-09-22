@@ -3,6 +3,7 @@ var LOBBY_CONTENT_URL = buildUrlWithContextPath("lobbyArea");
 var ENTER_GAME_URL = buildUrlWithContextPath("EnterGame");
 var CLEAR_UPLOAD_ERROR_URL = buildUrlWithContextPath("ClearUploadError");
 var CLEAR_UPLOAD_FILE_URL = buildUrlWithContextPath("ClearUploadFile");
+var VIEWER_ENTER_URL = buildUrlWithContextPath("ViewerEnter");
 
 
 $(function () {
@@ -29,7 +30,7 @@ $(function () {
             $("#lobby-player-name").append("Hello " + data);
         }
     });
-    setInterval(ajaxGetContent,2000);
+    setInterval(ajaxGetContent,1000);
 });
 
 function ajaxGetContent(){
@@ -78,6 +79,19 @@ function createUser(index,dataJson) {
     $('<li>' + dataJson.m_Name + '</li>').appendTo($("#lobby-userslist"));
 }
 
+function enterViewer(gameForm){
+    var currentGame = $('#lobby-games')[0].children[0].children[gameForm.getAttribute('index')].children[1].innerHTML;
+    $.ajax({
+        method: "POST",
+        url: VIEWER_ENTER_URL,
+        data: {gamename: currentGame},
+        success: function(response){
+                window.location = "/NinARow/pages/game/GameRoom.html";
+        }
+    })
+}
+
+
 function enterGame(gameForm){
     var currentGame = $('#lobby-games')[0].children[0].children[gameForm.getAttribute('index')].children[1].innerHTML;
     $.ajax({
@@ -85,7 +99,13 @@ function enterGame(gameForm){
         url: ENTER_GAME_URL,
         data: {gamename: currentGame},
         success: function(response){
-            window.location = "/NinARow/pages/game/GameRoom.html";
+            if(response)
+            {
+                $("#error-message").empty();
+                $("#error-message").append(response);
+            }
+            else
+                window.location = "/NinARow/pages/game/GameRoom.html";
         }
     })
 }
@@ -93,7 +113,9 @@ function enterGame(gameForm){
 function createBoard(index,dataJson){
     if(dataJson !== []){
         var gameForm = $("<tr id='gameForm' onclick='enterGame(this)'>");
+        var viewForm = $("<tr id='gameForm' onclick='enterViewer(this)'>");
         gameForm[0].setAttribute("index",index + 1);
+        viewForm[0].setAttribute("index",index + 1);
         var newBoard = $("<tr class = 'lobby-boards-game'>");
         newBoard.append($("<td class='lobby-col-title'>").append(index + 1));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.GameName));
@@ -103,15 +125,20 @@ function createBoard(index,dataJson){
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.Target));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ActiveGame.toString()));
         var enterGame = $("<td class='lobby-col-title'>");
+        var viewGame = $("<td class='lobby-col-title'>");
         var enterGameButton;
+        var viewGameButton;
         if(dataJson.ActiveGame.toString() === "Yes")
             enterGameButton = $("<input id ='enter-game-button' value='Join' disabled type='submit'>");
         else
             enterGameButton = $("<input id ='enter-game-button' value='Join' type='submit'>");
-        //enterGameButton[0].innerHTML = "Join";
+        viewGameButton = $("<input id ='view-game-button' value='View' type='submit'>");
         enterGame.append(enterGameButton);
+        viewForm.append(viewGameButton);
         gameForm.append(enterGame);
         newBoard.append(gameForm);
+        newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ViewersAmount));
+        newBoard.append(viewForm);
         $("#lobby-games").append(newBoard);
     }
 }

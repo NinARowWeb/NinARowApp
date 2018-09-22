@@ -137,7 +137,7 @@ public class EngineGame implements CommandsInterface, Serializable {
     }
 
     private void addDisc(Point i_LastMove,boolean i_Popout){
-        m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(m_Turn).getName(),i_LastMove,m_RegisterPlayers.get(m_Turn).getSignOnBoard(),i_Popout));
+        m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(m_Turn).getName(),i_LastMove,m_RegisterPlayers.get(m_Turn).getSignOnBoard(),i_Popout,false));
     }
 
     private void removeLastDisc(){
@@ -198,23 +198,34 @@ public class EngineGame implements CommandsInterface, Serializable {
     public int getUniqueID(){
         return m_RegisterPlayers.get(m_Turn).getUniqueID();
     }
-    
-    public String quitGame(){
-        String retiredName = m_RegisterPlayers.get(m_Turn).getName();
+
+    private int getIndexByUniqueID(int i_UniqueID){
+        for(int i = 0;i<m_RegisterPlayers.size();++i){
+            if(i_UniqueID == m_RegisterPlayers.get(i).getUniqueID())
+                return i;
+        }
+        return 0;
+    }
+
+    public String quitGame(int i_UniqueID){
+        int index = getIndexByUniqueID(i_UniqueID);
+        String retiredName = m_RegisterPlayers.get(index).getName();
         for(int i = m_Board.getRows() - 1; i>= 0;--i) {
             for (int j = m_Board.getCols() - 1; j >= 0; --j) {
-                if (m_Board.checkLegalPopoutMode(i, j, true, m_RegisterPlayers.get(m_Turn).getSignOnBoard())) {
+                if (m_Board.checkLegalPopoutMode(i, j, true, m_RegisterPlayers.get(index).getSignOnBoard())) {
                     m_Board.popoutDisc(i, j);
                     ++j;
                 }
             }
         }
+        m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(index).getName(),null,m_RegisterPlayers.get(index).getSignOnBoard(),false,true));
         m_RegisterPlayers.remove(m_Turn);
         if(m_Turn == m_RegisterPlayers.size())
             m_Turn = 0;
-        if(m_RegisterPlayers.size() == 1)
+        if(m_RegisterPlayers.size() == 1) {
             m_Winner.add(m_RegisterPlayers.get(0));
-        else {
+            m_Status = GameStateEnum.END_GAME;
+        }else {
             for (int i = m_Board.getRows() - 1; i >= 0; --i) {
                 for (int j = m_Board.getCols() - 1; j >= 0; --j) {
                     if (m_Board.checkExistingDisc(i, j)) {
@@ -234,6 +245,7 @@ public class EngineGame implements CommandsInterface, Serializable {
             if (m_RegisterPlayers.get(k).getSignOnBoard() == m_Board.getSignOnBoard(i_Row, i_Col) && m_Winner.contains(m_RegisterPlayers.get(k)) == false)
                 m_Winner.add(m_RegisterPlayers.get(k));
         }
+        m_Status = GameStateEnum.END_GAME;
     }
 
     public boolean checkLegalComputerPopoutMove(int i_Col){
@@ -360,7 +372,7 @@ public class EngineGame implements CommandsInterface, Serializable {
 
     @Override
     public void restartGame(){
-        m_RestartGame = true;
+        m_Status = GameStateEnum.PRE_GAME;
         initialGame(m_GameDetails);
         m_HistoryMoves.clear();
         m_Turn = 0;
@@ -371,5 +383,9 @@ public class EngineGame implements CommandsInterface, Serializable {
     @Override
     public void saveGame(ObjectOutputStream i_DataOut) throws IOException {
         i_DataOut.writeObject(this);
+    }
+
+    public DataHistoryDisc getMoveByIndex(int i_Index){
+        return m_HistoryMoves.get(i_Index);
     }
 }

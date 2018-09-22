@@ -1,6 +1,5 @@
-package users;
+package viewers;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,36 +8,36 @@ Adding and retrieving users is synchronized and for that manner - these actions 
 Note that asking if a user exists (isUserExists) does not participate in the synchronization and it is the responsibility
 of the user of this class to handle the synchronization of isUserExists with other methods here on it's own
  */
-public class UserManager {
+public class ViewerManager {
 
-    private final Set<User> usersSet;
+    private final Set<Viewer> viewersSet;
 
-    public UserManager() {
-        usersSet = new HashSet<>();
+    public ViewerManager() {
+        viewersSet = new HashSet<>();
     }
 
-    public synchronized void addUser(String username) {
-        usersSet.add(new User(username));
+    public synchronized void addViewer(String username) {
+        viewersSet.add(new Viewer(username));
     }
 
-    public synchronized void removeUser(String username) {
-        User toDelete = null;
-        for(User current:  usersSet){
+    public synchronized void removeViewer(String username) {
+        Viewer toDelete = null;
+        for(Viewer current:  viewersSet){
             if(current.getName().equals(username)){
                 toDelete = current;
                 break;
             }
         }
         if(toDelete != null)
-            usersSet.remove(toDelete);
+            viewersSet.remove(toDelete);
     }
 
-    public synchronized Set<User> getUsers() {
-        return usersSet;
+    public synchronized Set<Viewer> getViewers() {
+        return viewersSet;
     }
 
-    public synchronized boolean isUserExists(String username) {
-        for(User current:  usersSet){
+    public synchronized boolean isViewerExists(String username) {
+        for(Viewer current:  viewersSet){
             if(current.getName().equals(username)){
                 return true;
             }

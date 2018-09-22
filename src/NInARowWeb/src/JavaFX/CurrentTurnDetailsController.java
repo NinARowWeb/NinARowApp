@@ -1,7 +1,7 @@
 package JavaFX;
 
 import Engine.EngineGame;
-import Game.Servlet.GameRoom.ColorOnBoardEnum;
+import constants.ColorOnBoardEnum;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

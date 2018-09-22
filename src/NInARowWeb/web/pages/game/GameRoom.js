@@ -6,6 +6,7 @@ var PLAYERS_DETAILS_URL = buildUrlWithContextPath("PlayersDetails");
 var START_GAME_URL = buildUrlWithContextPath("StartGame");
 var PLAYER_MOVE_URL = buildUrlWithContextPath("PlayerMove");
 var COMPUTER_MOVE_URL = buildUrlWithContextPath("ComputerMove");
+var VIEWERS_LIST_URL = buildUrlWithContextPath("viewers");
 var historyIndex = 0;
 
 $(function () {
@@ -15,9 +16,7 @@ $(function () {
             $("#player-session-name").append("Hello " + data);
         }
     });
-
-    setInterval(getContent,2000);
-
+    setInterval(getContent,1000);
 });
 
 function getContent(){
@@ -25,7 +24,18 @@ function getContent(){
     getStatisticsContent();
     getPlayersDetailsContent();
     getHistoryContent();
-    //getChatContent();
+    getViewersListContent();
+}
+
+function getViewersListContent(){
+    $.ajax({
+        url: VIEWERS_LIST_URL,
+        dataType: 'json',
+        success:function(data){
+            $("#viwers-userslist").empty();
+            $.each(data.Viewers || [], createUser);
+        }
+    })
 }
 
 function getStatisticsContent(){
@@ -37,7 +47,13 @@ function getStatisticsContent(){
             $("#Target").append(data.Target);//ToDO: check on children attribute
             $("#Varient").empty();
             $("#Varient").append(data.Varient);
-            if(data.GameActive !== "PRE_GAME"){
+            $("#Waiting-message").empty();
+            if(data.GameActive === "PRE_GAME"){
+                var str = data.WaitingMessage.replace("\n","<br>");
+                $("#Waiting-message").append(str);
+//                $("#Waiting-message")[0].innerText.replace("\n","<br>");
+            }
+            if(data.GameActive === "GAMING"){
                 $("#Waiting-message").empty();
                 $("#Current-name-turn").empty();
                 $("#Current-name-turn").append(data.PlayerNameTurn);
@@ -45,11 +61,33 @@ function getStatisticsContent(){
                 $("#Time-elapsed").append(data.Time);
                 $("#Next-Player").empty();
                 $("#Next-Player").append(data.NextPlayerName);
-                if($(".game-label")[0].style.visibility !== "visible")
-                    $.each($(".game-label") || [], setVisible)
+                if($(".game-label")[0].style.visibility !== "visible") {
+                    $.each($(".game-label") || [], setVisible);
+                    $.each($(".title-label") || [], setVisible);
+                }
+                if(data.ComputerTurn === "Yes")
+                    setTimeout(ComputerMove,1000);
             }
+            else if(data.GameActive === "END_GAME"){
+                $("#Current-name-turn").empty();
+                $("#Time-elapsed").empty();
+                $("#Next-Player").empty();
+                if($(".game-label")[0].style.visibility === "visible")
+                    $.each($(".game-label") || [], setHidden)
+            }
+            $("#Winners-Message").empty();
+            $("#Winners-Message").append(data.Winners);
+
         }
     })
+}
+
+function createUser(index,dataJson) {
+    $('<li>' + dataJson.m_Name + '</li>').appendTo($("#viwers-userslist"));
+}
+
+function setHidden(index,data){
+    data.style.visibility = "hidden";
 }
 
 function setVisible(index,data){
@@ -66,13 +104,12 @@ function getPlayersDetailsContent() {
                 $("#playersDetails").css({"visibility":"visible"});
                 for (var i = 0; i < data.Players.length; ++i) {
                     var player = $("<div class = 'playerDetails'>");
-                    var name = $("<label class = 'playerName'>").append("Name :" + data.Players[i].PlayerName).append($("<br>"));
-                    var type = $("<label class = 'playerType'>").append("Type :" +data.Players[i].Type).append($("<br>"));
-                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color :" +data.Players[i].Color).append($("<br>"));
-                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played :" +data.Players[i].Turns).append($("<br>"));
-                    var status = $("<label class = 'playerStatus'>").append("Status :" +data.Players[i].Status).append($("<br>"));
+                    var name = $("<label class = 'playerName'>").append("Name: " + data.Players[i].PlayerName).append($("<br>"));
+                    var type = $("<label class = 'playerType'>").append("Type: " +data.Players[i].Type).append($("<br>"));
+                    var colorOnBoard = $("<label class = 'playerColor'>").append("Color: " +data.Players[i].Color).append($("<br>"));
+                    var turnsPlayed = $("<label class = 'playerTurns'>").append("Turns Played: " +data.Players[i].Turns).append($("<br>"));
                     var seperator = $("<hr>");
-                    player.append(name, type, colorOnBoard, turnsPlayed, status,seperator);
+                    player.append(name, type, colorOnBoard, turnsPlayed,seperator);
                     $("#playersDetails").append(player);
                 }
             }
@@ -113,7 +150,7 @@ function getBoardContent(){
             for (row = 0; row < data.Rows; row++) {
                 for(col = 0; col < data.Cols; col++){
                     var button;
-                    if(data.GameStatus === "GAMING" && data.ComputerPlayer === "false") {
+                    if(data.GameStatus === "GAMING" && data.ComputerPlayer === "false" && data.Viewer === undefined) {
                         if (row === 0) {
                             button = $("<button id='board-cell-button' onclick='humanPlayerMove(this,false)'>");
                             button[0].setAttribute("Col",col);
@@ -168,12 +205,12 @@ function humanPlayerMove(button,popout){
         method: "POST",
         success:function(data){
             if(data !== "null"){
+                $("#error-move-message").empty();
                 $("#error-move-message").append(data);
-                setTimeout(clearErrorMessage(),10000);
+                setTimeout(clearErrorMessage,10000);
             }
             else{
                 $("#error-move-message").empty();
-                setTimeout(ComputerMove,1000);
             }
         }
     })
@@ -184,9 +221,9 @@ function ComputerMove(){
         url: COMPUTER_MOVE_URL,
         method: "POST",
         success:function(data){
-            if(data !== "null"){
+            /*if(data !== "null"){
                 setTimeout(ComputerMove(),1000);
-            }
+            }*/
         }
     })
 }

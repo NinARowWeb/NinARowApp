@@ -19,7 +19,7 @@ public class QuitGameController implements Controller{
     void handleQuitGameButtonClicked(ActionEvent event) {
        // JOptionPane.showMessageDialog(null, m_Engine.getPlayerTurnName(m_Engine.getTurn()) + " Quit!", "Quit Game", JOptionPane.INFORMATION_MESSAGE);
         int removePlayerUniqueID = m_Engine.getUniqueID();
-        String retiredName = m_Engine.quitGame();
+        String retiredName = m_Engine.quitGame(m_Engine.getTurn());
         for(QuitGameMode listener: m_Quit)
             listener.quitGame(removePlayerUniqueID,retiredName);
     }
