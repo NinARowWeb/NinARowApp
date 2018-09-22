@@ -7,11 +7,23 @@
     }
 }
 
+#logout-Button {
+    position: fixed;
+    top:5%;
+    left: 90%;
+}
+
+#logout-Button:hover{
+    background-color: rgba(215, 216, 210, 1);
+    border-color: rgba(215, 216, 210, 1);
+}
+
 html{
     background: #87CEEB;
 }
 
 body{
+    font-family: Calibri, sans-serif;
     min-width:500px;
     min-height: 500px;
     overflow: auto;
@@ -29,13 +41,23 @@ body{
 }
 
 #Waiting-message, #Winners-Message, #error-move-message{
-    position: fixed;
+    position: absolute;
     left: 20%;
     top: 4%;
 }
 
+#viwers-userslist{
+    height: 120px;
+    width: 180px;
+    border: 1px solid #000000;
+    overflow: auto;
+    /*position: fixed;
+    left: 20%;
+    top: 4%;*/
+}
+
 #board{
-    position: fixed;
+    position: absolute;
     left: 20%;
     top: 20%;
     overflow: auto;

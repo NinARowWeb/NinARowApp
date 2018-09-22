@@ -6,13 +6,18 @@ var PLAYERS_DETAILS_URL = buildUrlWithContextPath("PlayersDetails");
 var START_GAME_URL = buildUrlWithContextPath("StartGame");
 var PLAYER_MOVE_URL = buildUrlWithContextPath("PlayerMove");
 var COMPUTER_MOVE_URL = buildUrlWithContextPath("ComputerMove");
+var VIEWERS_LIST_URL = buildUrlWithContextPath("viewers");
 var historyIndex = 0;
 
 $(function () {
     $.ajax({
         url:USER,
+        dataType: 'json',
         success:function(data){
-            $("#player-session-name").append("Hello " + data);
+            $("#player-session-name").append("Hello " + data.PlayerName);
+            if(data.Viewer !== undefined){
+                $("#Chat").remove();
+            }
         }
     });
     setInterval(getContent,1000);
@@ -23,6 +28,18 @@ function getContent(){
     getStatisticsContent();
     getPlayersDetailsContent();
     getHistoryContent();
+    getViewersListContent();
+}
+
+function getViewersListContent(){
+    $.ajax({
+        url: VIEWERS_LIST_URL,
+        dataType: 'json',
+        success:function(data){
+            $("#viwers-userslist").empty();
+            $.each(data.Viewers || [], createUser);
+        }
+    })
 }
 
 function getStatisticsContent(){
@@ -67,6 +84,10 @@ function getStatisticsContent(){
 
         }
     })
+}
+
+function createUser(index,dataJson) {
+    $('<li>' + dataJson.m_Name + '</li>').appendTo($("#viwers-userslist"));
 }
 
 function setHidden(index,data){
@@ -133,7 +154,7 @@ function getBoardContent(){
             for (row = 0; row < data.Rows; row++) {
                 for(col = 0; col < data.Cols; col++){
                     var button;
-                    if(data.GameStatus === "GAMING" && data.ComputerPlayer === "false") {
+                    if(data.GameStatus === "GAMING" && data.ComputerPlayer === "false" && data.Viewer === undefined) {
                         if (row === 0) {
                             button = $("<button id='board-cell-button' onclick='humanPlayerMove(this,false)'>");
                             button[0].setAttribute("Col",col);

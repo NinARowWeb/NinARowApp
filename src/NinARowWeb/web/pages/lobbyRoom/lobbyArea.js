@@ -26,8 +26,9 @@ $(function () {
 
     $.ajax({
         url:USER,
+        dataType: 'json',
         success:function(data){
-            $("#lobby-player-name").append("Hello " + data);
+            $("#lobby-player-name").append("Hello " + data.PlayerName);
         }
     });
     setInterval(ajaxGetContent,1000);
@@ -112,8 +113,8 @@ function enterGame(gameForm){
 
 function createBoard(index,dataJson){
     if(dataJson !== []){
-        var gameForm = $("<tr id='gameForm' onclick='enterGame(this)'>");
-        var viewForm = $("<tr id='gameForm' onclick='enterViewer(this)'>");
+        var gameForm = $("<td id='gameForm' onclick='enterGame(this)'>");
+        var viewForm = $("<td id='gameForm' onclick='enterViewer(this)'>");
         gameForm[0].setAttribute("index",index + 1);
         viewForm[0].setAttribute("index",index + 1);
         var newBoard = $("<tr class = 'lobby-boards-game'>");
@@ -125,8 +126,6 @@ function createBoard(index,dataJson){
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.BoardSize));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.Target));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ActiveGame.toString()));
-        var enterGame = $("<td class='lobby-col-title'>");
-        var viewGame = $("<td class='lobby-col-title'>");
         var enterGameButton;
         var viewGameButton;
         if(dataJson.ActiveGame.toString() === "Yes")
@@ -134,9 +133,8 @@ function createBoard(index,dataJson){
         else
             enterGameButton = $("<input id ='enter-game-button' value='Join' type='submit'>");
         viewGameButton = $("<input id ='view-game-button' value='View' type='submit'>");
-        enterGame.append(enterGameButton);
         viewForm.append(viewGameButton);
-        gameForm.append(enterGame);
+        gameForm.append(enterGameButton);
         newBoard.append(gameForm,viewForm);
         $("#lobby-games").append(newBoard);
     }

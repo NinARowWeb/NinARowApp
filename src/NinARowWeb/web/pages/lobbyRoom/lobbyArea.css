@@ -4,6 +4,8 @@ html{
 
 body{
     font-family: Calibri, sans-serif;
+    min-width:500px;
+    min-height: 500px;
 }
 
 .lobby-details{
@@ -16,10 +18,14 @@ body{
 }
 
 .lobby-registered-players{
-    position: fixed;
+    position: absolute;
     top:4%
 }
 
+#lobby-games{
+    border: 1px solid #000000;
+    border-radius: 6px;
+}
 #lobby-games .lobby-col-title{
     width: 10%;
     border: 1px solid #dddddd;
@@ -35,16 +41,15 @@ body{
     font-weight: bold;
 }
 
-.lobby-file-choicer{
+#lobby-file-choicer{
     top:20%;
     width: 80px;
     float: left;
     margin-right: 4%;
 }
 
-#enter-game-button{
+#enter-game-button, #view-game-button{
     width: 100%;
-    position:fixed;
 }
 
 .lobby-boards-title{
@@ -63,4 +68,9 @@ body{
     position: fixed;
     top:5%;
     left: 90%;
+}
+
+#logout-Button:hover, #enter-game-button:hover, #view-game-button:hover, #upload-Game:hover{
+    background-color: rgba(215, 216, 210, 1);
+    border-color: rgba(215, 216, 210, 1);
 }
