@@ -22,6 +22,10 @@ body{
     top:4%
 }
 
+#lobby-games{
+    border: 1px solid #000000;
+    border-radius: 6px;
+}
 #lobby-games .lobby-col-title{
     width: 10%;
     border: 1px solid #dddddd;
