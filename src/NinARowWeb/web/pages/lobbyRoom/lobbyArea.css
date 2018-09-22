@@ -4,10 +4,12 @@ html{
 
 body{
     font-family: Calibri, sans-serif;
+    min-width:500px;
+    min-height: 500px;
 }
 
 .lobby-details{
-    position: fixed;
+    position: absolute;
     left: 11%;
 }
 
@@ -16,7 +18,7 @@ body{
 }
 
 .lobby-registered-players{
-    position: fixed;
+    position: absolute;
     top:4%
 }
 
@@ -59,7 +61,7 @@ body{
 }
 
 #logout-Button {
-    position: fixed;
+    position: absolute;
     top:5%;
     left: 90%;
 }

@@ -14,7 +14,6 @@ html{
 body{
     min-width:500px;
     min-height: 500px;
-    overflow: auto;
 }
 
 #board-cell-button{
@@ -29,7 +28,7 @@ body{
 }
 
 #Waiting-message, #Winners-Message, #error-move-message{
-    position: fixed;
+    position: absolute;
     left: 20%;
     top: 4%;
 }
@@ -42,10 +41,9 @@ body{
 }
 
 #board{
-    position: fixed;
+    position: absolute;
     left: 20%;
     top: 20%;
-    overflow: auto;
 }
 
 #History {
