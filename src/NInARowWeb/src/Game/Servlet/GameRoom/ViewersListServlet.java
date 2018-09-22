@@ -7,7 +7,7 @@ import boards.BoardsManager;
 import com.google.gson.Gson;
 import constants.Constants;
 import responses.BoardGameContentResponse;
-import responses.StatisticsContentResponse;
+import responses.ViewersListContentResponse;
 import viewers.Viewer;
 import viewers.ViewerManager;
 
@@ -20,24 +20,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
-@WebServlet(name = "StatisticsServlet", urlPatterns = {"/Statistics"})
-public class StatisticsServlet extends HttpServlet {
 
+@WebServlet(name = "ViewersListServlet", urlPatterns = {"/viewers"})
+public class ViewersListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String boardName = SessionUtils.getAttribute(request,Constants.BOARD_GAME);
         BoardsManager manager = ServletUtils.getBoardsManager(getServletContext());
         Board game = manager.getGameBoard(boardName);
-
+        ViewerManager viewerManager = game.getViewerManager();
+        Set<Viewer> viewers = viewerManager.getViewers();
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        String jsonResponse;
-        if(game.getStatus() == "GAMING")
-            jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()),game.getTime(),game.getTarget(),game.getVarient(),game.getPlayerName((game.getTurn() + 1)%game.getAmountOfRegistersPlayers()),game.getStatus(),
-                    game.isComputerTurn() == true? "Yes" : "No",game.getWinnersNames(),-1,-1));
-        else
-            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null,game.getStatus(),null,game.getWinnersNames(),game.getCapacityOfPlayers(),game.getAmountOfRegistersPlayers()));
+        String jsonResponse = gson.toJson(new ViewersListContentResponse(viewers));
         out.print(jsonResponse);
     }
 }

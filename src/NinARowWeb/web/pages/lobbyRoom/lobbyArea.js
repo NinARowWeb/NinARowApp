@@ -26,8 +26,9 @@ $(function () {
 
     $.ajax({
         url:USER,
+        dataType: 'json',
         success:function(data){
-            $("#lobby-player-name").append("Hello " + data);
+            $("#lobby-player-name").append("Hello " + data.PlayerName);
         }
     });
     setInterval(ajaxGetContent,1000);
@@ -137,7 +138,9 @@ function createBoard(index,dataJson){
         enterGame.append(enterGameButton);
         viewForm.append(viewGameButton);
         gameForm.append(enterGame);
-        newBoard.append(gameForm,viewForm);
+        newBoard.append(gameForm);
+        newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ViewersAmount));
+        newBoard.append(viewForm);
         $("#lobby-games").append(newBoard);
     }
 }

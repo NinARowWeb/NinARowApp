@@ -4,6 +4,8 @@ html{
 
 body{
     font-family: Calibri, sans-serif;
+    min-width:500px;
+    min-height: 500px;
 }
 
 .lobby-details{
@@ -16,10 +18,14 @@ body{
 }
 
 .lobby-registered-players{
-    position: fixed;
+    position: absolute;
     top:4%
 }
 
+#lobby-games{
+    border: 1px solid #000000;
+    border-radius: 6px;
+}
 #lobby-games .lobby-col-title{
     width: 10%;
     border: 1px solid #dddddd;
@@ -42,7 +48,7 @@ body{
     margin-right: 4%;
 }
 
-#enter-game-button{
+#enter-game-button, #view-game-button{
     width: 100%;
     position:fixed;
 }

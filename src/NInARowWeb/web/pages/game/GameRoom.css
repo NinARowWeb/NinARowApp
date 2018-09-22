@@ -29,13 +29,23 @@ body{
 }
 
 #Waiting-message, #Winners-Message, #error-move-message{
-    position: fixed;
+    position: absolute;
     left: 20%;
     top: 4%;
 }
 
+#viwers-userslist{
+    height: 120px;
+    width: 180px;
+    border: 1px solid #000000;
+    overflow: auto;
+//    position: fixed;
+//    left: 20%;
+//    top: 4%;
+}
+
 #board{
-    position: fixed;
+    position: absolute;
     left: 20%;
     top: 20%;
     overflow: auto;

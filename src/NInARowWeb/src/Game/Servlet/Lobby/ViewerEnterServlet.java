@@ -23,6 +23,7 @@ public class ViewerEnterServlet extends HttpServlet {
         BoardsManager manager = ServletUtils.getBoardsManager(getServletContext());
         Board game = manager.getGameBoard(request.getParameter(Constants.GAME_NAME));
         String registerPlayerName = SessionUtils.getAttribute(request,Constants.USERNAME);
+        SessionUtils.setAttribute(request,Constants.VIEWER,"yes");
         game.addViewer(registerPlayerName);
         SessionUtils.setAttribute(request,Constants.BOARD_GAME,request.getParameter(Constants.GAME_NAME));
     }

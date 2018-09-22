@@ -12,7 +12,7 @@ public class BoardGameContentResponse {
     private String ActiveGame;
     private String GameStatus;
     private String ComputerPlayer;
-    private String ViewersAmount;
+    private String Viewer;
     private List<Point> WinnersPoints;
 
     public BoardGameContentResponse(BoardCell[][] i_Board,int i_Rows, int i_Cols, String i_Varient, String i_ActiveGame, String i_GameStatus,
@@ -25,6 +25,6 @@ public class BoardGameContentResponse {
         GameStatus = i_GameStatus;
         ComputerPlayer = i_ComputerPlayer;
         WinnersPoints = i_WinnersPoints;
-        ViewersAmount = i_Viewer;
+        Viewer = i_Viewer;
     }
 }
