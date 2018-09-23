@@ -4,13 +4,12 @@ html{
 
 body{
     font-family: Calibri, sans-serif;
-    min-width:500px;
-    min-height: 500px;
+    overflow: auto;
 }
 
 .lobby-details{
-    position: fixed;
-    left: 11%;
+    position: absolute;
+    left: 150px;
 }
 
 #lobby-player-name{
@@ -49,7 +48,8 @@ body{
 }
 
 #enter-game-button, #view-game-button{
-    width: 100%;
+    left: 30%;
+    position: relative;
 }
 
 .lobby-boards-title{
@@ -65,7 +65,7 @@ body{
 }
 
 #logout-Button {
-    position: fixed;
+    position: absolute;
     top:5%;
     left: 90%;
 }

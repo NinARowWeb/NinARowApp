@@ -46,10 +46,18 @@ function ajaxGetContent(){
             $.each(data.boards || [], createBoard);
             $("#lobby-userslist").empty();
             $.each(data.users || [], createUser);
-            $("#error-message").empty();
-            $("#error-message").append(data.errorMessage);
-            if(data.errorMessage)
-                setTimeout(clearMessage,5000);
+            if(data.errorMessage) {
+                $("#error-message").empty();
+                $("#error-message").append(data.errorMessage);
+                $.ajax({
+                    method: "POST",
+                    url: CLEAR_UPLOAD_ERROR_URL,
+                    dataType: 'json',
+                    success: function () {
+                    }
+                });
+                setTimeout(clearMessage, 5000);
+            }
             if(data.submitStatus)
                 clearFileChooser();
         }
@@ -57,7 +65,7 @@ function ajaxGetContent(){
 }
 
 function clearFileChooser(){
-    $(".lobby-file-choicer")[0].value = "";
+    $("#lobby-file-choicer")[0].value = "";
     $.ajax({
         method: "POST",
         url: CLEAR_UPLOAD_FILE_URL,
@@ -68,12 +76,6 @@ function clearFileChooser(){
 
 function clearMessage(){
     $("#error-message").empty();
-    $.ajax({
-        method: "POST",
-        url: CLEAR_UPLOAD_ERROR_URL,
-        dataType: 'json',
-        success:function(){}
-    })
 }
 
 function createUser(index,dataJson) {

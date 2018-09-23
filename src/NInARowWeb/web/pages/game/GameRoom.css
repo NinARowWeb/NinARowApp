@@ -40,7 +40,7 @@ body{
 
 #Waiting-message, #Winners-Message, #error-move-message{
     position: absolute;
-    left: 20%;
+    left: 200px;
     top: 4%;
 }
 
@@ -53,8 +53,8 @@ body{
 
 #board{
     position: absolute;
-    left: 20%;
-    top: 20%;
+    left: 350px;
+    top: 150px;
     overflow: auto;
 }
 
