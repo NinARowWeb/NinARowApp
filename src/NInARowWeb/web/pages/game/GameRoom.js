@@ -69,6 +69,8 @@ function getStatisticsContent(){
                     $.each($(".game-label") || [], setVisible);
                     $.each($(".title-label") || [], setVisible);
                 }
+                if(data.ClearError)
+                    clearErrorMessage();
                 if(data.ComputerTurn === "Yes")
                     setTimeout(ComputerMove,1000);
             }
