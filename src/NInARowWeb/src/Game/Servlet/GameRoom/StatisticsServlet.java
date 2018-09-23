@@ -33,11 +33,16 @@ public class StatisticsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String jsonResponse;
-        if(game.getStatus() == "GAMING")
-            jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()),game.getTime(),game.getTarget(),game.getVarient(),game.getPlayerName((game.getTurn() + 1)%game.getAmountOfRegistersPlayers()),game.getStatus(),
-                    game.isComputerTurn() == true? "Yes" : "No",game.getWinnersNames(),-1,-1));
+        String playerTurnError = SessionUtils.getAttribute(request,Constants.PLAYER_TURN_ERROR);
+        String clearError = playerTurnError != null && Integer.toString(game.getCurrentPlayerUniqueID()).equals(SessionUtils.getAttribute(request,Constants.UNIQUE_ID))? "Yes" : null;
+        if(game.getStatus() == "GAMING") {
+            jsonResponse = gson.toJson(new StatisticsContentResponse(game.getPlayerName(game.getTurn()), game.getTime(), game.getTarget(), game.getVarient(), game.getPlayerName((game.getTurn() + 1) % game.getAmountOfRegistersPlayers()), game.getStatus(),
+                    game.isComputerTurn() == true ? "Yes" : "No", game.getWinnersNames(), -1, -1, clearError));
+            if(clearError != null)
+                SessionUtils.removeAttribute(request,Constants.PLAYER_TURN_ERROR);
+        }
         else
-            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null,game.getStatus(),null,game.getWinnersNames(),game.getCapacityOfPlayers(),game.getAmountOfRegistersPlayers()));
+            jsonResponse = gson.toJson(new StatisticsContentResponse(null,null,game.getTarget(),game.getVarient(),null,game.getStatus(),null,game.getWinnersNames(),game.getCapacityOfPlayers(),game.getAmountOfRegistersPlayers(),null));
         out.print(jsonResponse);
     }
 }

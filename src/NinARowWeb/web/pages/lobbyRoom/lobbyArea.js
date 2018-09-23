@@ -46,10 +46,18 @@ function ajaxGetContent(){
             $.each(data.boards || [], createBoard);
             $("#lobby-userslist").empty();
             $.each(data.users || [], createUser);
-            $("#error-message").empty();
-            $("#error-message").append(data.errorMessage);
-            if(data.errorMessage)
-                setTimeout(clearMessage,5000);
+            if(data.errorMessage) {
+                $("#error-message").empty();
+                $("#error-message").append(data.errorMessage);
+                $.ajax({
+                    method: "POST",
+                    url: CLEAR_UPLOAD_ERROR_URL,
+                    dataType: 'json',
+                    success: function () {
+                    }
+                });
+                setTimeout(clearMessage, 5000);
+            }
             if(data.submitStatus)
                 clearFileChooser();
         }
@@ -57,7 +65,7 @@ function ajaxGetContent(){
 }
 
 function clearFileChooser(){
-    $(".lobby-file-choicer")[0].value = "";
+    $("#lobby-file-choicer")[0].value = "";
     $.ajax({
         method: "POST",
         url: CLEAR_UPLOAD_FILE_URL,
@@ -68,12 +76,6 @@ function clearFileChooser(){
 
 function clearMessage(){
     $("#error-message").empty();
-    $.ajax({
-        method: "POST",
-        url: CLEAR_UPLOAD_ERROR_URL,
-        dataType: 'json',
-        success:function(){}
-    })
 }
 
 function createUser(index,dataJson) {
@@ -113,8 +115,8 @@ function enterGame(gameForm){
 
 function createBoard(index,dataJson){
     if(dataJson !== []){
-        var gameForm = $("<tr id='gameForm' onclick='enterGame(this)'>");
-        var viewForm = $("<tr id='gameForm' onclick='enterViewer(this)'>");
+        var gameForm = $("<td id='gameForm' onclick='enterGame(this)'>");
+        var viewForm = $("<td id='gameForm' onclick='enterViewer(this)'>");
         gameForm[0].setAttribute("index",index + 1);
         viewForm[0].setAttribute("index",index + 1);
         var newBoard = $("<tr class = 'lobby-boards-game'>");
@@ -126,8 +128,6 @@ function createBoard(index,dataJson){
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.BoardSize));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.Target));
         newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ActiveGame.toString()));
-        var enterGame = $("<td class='lobby-col-title'>");
-        var viewGame = $("<td class='lobby-col-title'>");
         var enterGameButton;
         var viewGameButton;
         if(dataJson.ActiveGame.toString() === "Yes")
@@ -135,12 +135,9 @@ function createBoard(index,dataJson){
         else
             enterGameButton = $("<input id ='enter-game-button' value='Join' type='submit'>");
         viewGameButton = $("<input id ='view-game-button' value='View' type='submit'>");
-        enterGame.append(enterGameButton);
         viewForm.append(viewGameButton);
-        gameForm.append(enterGame);
-        newBoard.append(gameForm);
-        newBoard.append($("<td class='lobby-col-title'>").append(dataJson.ViewersAmount));
-        newBoard.append(viewForm);
+        gameForm.append(enterGameButton);
+        newBoard.append(gameForm,viewForm);
         $("#lobby-games").append(newBoard);
     }
 }

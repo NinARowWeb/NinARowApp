@@ -27,18 +27,17 @@ public class PlayerMoveServlet extends HttpServlet {
             boolean popout = request.getParameter("Popout") == "True" ? true : false;
             int col = Integer.parseInt(request.getParameter("Col"));
             Point move = game.playerMove(col, popout);
-            out.print(SessionUtils.getAttribute(request, Constants.ERROR_LOGIN_MESSAGE));
             if (move == null) {
                 if (popout) {
                     out.print(String.format("Your popout move is not legal"));
                 } else {
-                    out.print(String.format("col: {0} is fulled. please enter another col in range", (col + 1)));
-
+                    out.print(String.format("col: %d is fulled. please enter another col in range", (col + 1)));
                 }
             }
         }
         else{
-            out.print(String.format("This is not your turn"));
+            SessionUtils.setAttribute(request,Constants.PLAYER_TURN_ERROR,String.format("This is not your turn"));
+            out.print("This is not your turn");
         }
     }
 }
