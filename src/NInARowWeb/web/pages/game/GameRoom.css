@@ -65,15 +65,16 @@ body{
 }
 
 #History {
-    height: 120px;
+    height: 80px;
     width: 250px;
     border: 1px solid #000000;
     overflow: auto;
     visibility: hidden;
 }
 
-#History History-List{
-    left: 0px;
+#History .History-Item{
+    left: -20px;
+    position:relative;
 }
 
 .game-label, .title-label{
