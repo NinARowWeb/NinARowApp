@@ -242,7 +242,7 @@ public class Board {
 
     public String getWinnersNames() {
         StringBuilder endGameMessage = new StringBuilder();
-        if(Engine.getWinner().size() != 0) {
+        if(Engine.getWinner().size() != 0 || Engine.getDrawMode()) {
 
             if (Engine.getWinner().size() == 1) {
                 endGameMessage.append(Engine.getWinner().get(0).getName() + " Won!");

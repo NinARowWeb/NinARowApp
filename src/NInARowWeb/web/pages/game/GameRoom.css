@@ -38,9 +38,15 @@ body{
     top: 5%;
 }
 
-#Waiting-message, #Winners-Message, #error-move-message{
+#Waiting-message, #error-move-message{
     position: absolute;
     left: 200px;
+    top: 4%;
+}
+
+#Winners-Message{
+    position: absolute;
+    left: 350px;
     top: 4%;
 }
 

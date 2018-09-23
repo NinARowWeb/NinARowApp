@@ -332,6 +332,9 @@ public class EngineGame implements CommandsInterface, Serializable {
     private void checkDraw()
     {
         m_Draw = m_Board.checkDraw(m_Varient,m_RegisterPlayers.get(m_Turn).getSignOnBoard());
+        if(m_Draw){
+            m_Status = GameStateEnum.END_GAME;
+        }
     }
 
     private void checkWinGame(Point i_LastMove){
