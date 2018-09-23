@@ -24,7 +24,7 @@ public class PlayerMoveServlet extends HttpServlet {
         Board game = manager.getGameBoard(boardName);
         PrintWriter out = response.getWriter();
         if(SessionUtils.getAttribute(request,Constants.UNIQUE_ID).equals(Integer.toString(game.getCurrentPlayerUniqueID()))) {
-            boolean popout = request.getParameter("Popout") == "True" ? true : false;
+            boolean popout = request.getParameter("Popout").equals("true") ? true : false;
             int col = Integer.parseInt(request.getParameter("Col"));
             Point move = game.playerMove(col, popout);
             if (move == null) {
