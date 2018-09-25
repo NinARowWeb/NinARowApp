@@ -219,7 +219,7 @@ public class EngineGame implements CommandsInterface, Serializable {
             }
         }
         m_HistoryMoves.add(new DataHistoryDisc(m_RegisterPlayers.get(index).getName(),null,m_RegisterPlayers.get(index).getSignOnBoard(),false,true));
-        m_RegisterPlayers.remove(m_Turn);
+        m_RegisterPlayers.remove(index);
         if(m_Turn == m_RegisterPlayers.size())
             m_Turn = 0;
         if(m_RegisterPlayers.size() == 1) {

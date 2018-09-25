@@ -34,6 +34,7 @@ public class LogoutGameServlet extends HttpServlet {
             game.removeViewer(SessionUtils.getAttribute(request,Constants.USERNAME));
         }
         else{
+            game.setPlayerRetired(SessionUtils.getAttribute(request, Constants.USERNAME) + " Retired!");
             SessionUtils.removeAttribute(request, Constants.UNIQUE_ID);
             game.quitGame(Integer.parseInt(uniqueIDFromSession),isComputerFromSession == "true"? true : false);
         }

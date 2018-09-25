@@ -38,16 +38,16 @@ body{
     top: 5%;
 }
 
-#Waiting-message, #error-move-message{
+#Waiting-message, #error-move-message, #Player-Retired-message{
     position: absolute;
-    left: 200px;
+    left: 350px;
     top: 4%;
 }
 
 #Winners-Message{
     position: absolute;
     left: 350px;
-    top: 4%;
+    top: 8%;
 }
 
 #viwers-userslist{
@@ -73,7 +73,7 @@ body{
 }
 
 #History .History-Item{
-    left: -20px;
+    left: -15px;
     position:relative;
 }
 

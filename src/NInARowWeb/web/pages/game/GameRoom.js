@@ -7,6 +7,7 @@ var START_GAME_URL = buildUrlWithContextPath("StartGame");
 var PLAYER_MOVE_URL = buildUrlWithContextPath("PlayerMove");
 var COMPUTER_MOVE_URL = buildUrlWithContextPath("ComputerMove");
 var VIEWERS_LIST_URL = buildUrlWithContextPath("viewers");
+var CLEAR_PLAYER_RETIRED_URL = buildUrlWithContextPath("ClearPlayerRetired");
 var historyIndex = 0;
 
 $(function () {
@@ -189,6 +190,21 @@ function getBoardContent(){
             if(data.GameStatus === "PRE_GAME" && data.ActiveGame === "Yes"){
                 startGame();
             }
+            if(data.PlayerRetired){
+                $("#Player-Retired-message").empty();
+                $("#Player-Retired-message").append(data.PlayerRetired);
+                setTimeout(clearPlayerRetiredMessage, 5000);
+            }
+        }
+    })
+}
+
+function clearPlayerRetiredMessage(){
+    $("#Player-Retired-message").empty();
+    $.ajax({
+        url: CLEAR_PLAYER_RETIRED_URL,
+        method: "POST",
+        success: function () {
         }
     })
 }

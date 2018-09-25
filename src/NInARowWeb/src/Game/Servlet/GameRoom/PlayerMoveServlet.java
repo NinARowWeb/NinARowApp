@@ -24,24 +24,21 @@ public class PlayerMoveServlet extends HttpServlet {
         Board game = manager.getGameBoard(boardName);
         PrintWriter out = response.getWriter();
         if(SessionUtils.getAttribute(request,Constants.UNIQUE_ID).equals(Integer.toString(game.getCurrentPlayerUniqueID()))) {
-            String popout = request.getParameter("Popout");
-            boolean isPopout = false;
-            if(popout.equals("true")){
-                isPopout = true;
-            }
+            boolean popout = request.getParameter("Popout").equals("true") ? true : false;
             int col = Integer.parseInt(request.getParameter("Col"));
-            Point move = game.playerMove(col, isPopout);
+            Point move = game.playerMove(col, popout);
             if (move == null) {
-                if (isPopout) {
+                if (popout) {
                     out.print(String.format("Your popout move is not legal"));
                 } else {
                     out.print(String.format("col: %d is fulled. please enter another col in range", (col + 1)));
+
                 }
             }
         }
         else{
             SessionUtils.setAttribute(request,Constants.PLAYER_TURN_ERROR,String.format("This is not your turn"));
-            out.print("This is not your turn");
+            out.print(String.format("This is not your turn"));
         }
     }
 }
