@@ -38,10 +38,16 @@ body{
     top: 5%;
 }
 
-#Waiting-message, #Winners-Message, #error-move-message{
+#Waiting-message, #error-move-message, #Player-Retired-message{
     position: absolute;
-    left: 200px;
+    left: 350px;
     top: 4%;
+}
+
+#Winners-Message{
+    position: absolute;
+    left: 350px;
+    top: 8%;
 }
 
 #viwers-userslist{
@@ -59,15 +65,16 @@ body{
 }
 
 #History {
-    height: 120px;
+    height: 80px;
     width: 250px;
     border: 1px solid #000000;
     overflow: auto;
     visibility: hidden;
 }
 
-#History History-List{
-    left: 0px;
+#History .History-Item{
+    left: -15px;
+    position:relative;
 }
 
 .game-label, .title-label{

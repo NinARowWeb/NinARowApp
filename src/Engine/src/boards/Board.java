@@ -24,6 +24,7 @@ public class Board {
     private String Status;
     private ChatManager Chat;
     private ViewerManager Viewer;
+    private String PlayerRetired = null;
 
     public Board(String i_GameName, String i_CreatedUserName, int i_CapacityOfPlayers, EngineGame i_Engine, String i_Status){
         GameName = i_GameName;
@@ -40,6 +41,14 @@ public class Board {
         Chat = new ChatManager();
         Viewer = new ViewerManager();
         ViewersAmount = 0;
+    }
+
+    public void setPlayerRetired(String i_Message){
+        PlayerRetired = i_Message;
+    }
+
+    public String getPlayerRetired(){
+        return PlayerRetired;
     }
 
     public void startGame(){
@@ -219,6 +228,7 @@ public class Board {
         Engine.restartGame();
         Chat = new ChatManager();
         Viewer = new ViewerManager();
+        PlayerRetired = null;
     }
 
     public synchronized void quitGame(int i_UniqueID,boolean computerPlayer){
@@ -242,7 +252,7 @@ public class Board {
 
     public String getWinnersNames() {
         StringBuilder endGameMessage = new StringBuilder();
-        if(Engine.getWinner().size() != 0) {
+        if(Engine.getWinner().size() != 0 || Engine.getDrawMode()) {
 
             if (Engine.getWinner().size() == 1) {
                 endGameMessage.append(Engine.getWinner().get(0).getName() + " Won!");
