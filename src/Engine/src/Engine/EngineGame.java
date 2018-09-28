@@ -240,6 +240,11 @@ public class EngineGame implements CommandsInterface, Serializable {
         return retiredName;
     }
 
+    public void removePlayerByUniqueID(int i_UniqueID){
+        int index = getIndexByUniqueID(i_UniqueID);
+        m_RegisterPlayers.remove(index);
+    }
+
     private void setWinners(int i_Row,int i_Col) {
         for (int k = 0; k < m_RegisterPlayers.size(); ++k) {
             if (m_RegisterPlayers.get(k).getSignOnBoard() == m_Board.getSignOnBoard(i_Row, i_Col) && m_Winner.contains(m_RegisterPlayers.get(k)) == false)

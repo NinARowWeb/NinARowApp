@@ -234,6 +234,8 @@ public class Board {
     public synchronized void quitGame(int i_UniqueID,boolean computerPlayer){
         if(Status == "GAMING")
             Engine.quitGame(i_UniqueID);
+        else if(Status == "PRE_GAME")
+            Engine.removePlayerByUniqueID(i_UniqueID);
         RegisteredPlayers--;
         updateRegisteredPlayerResponse();
         if(!computerPlayer)
