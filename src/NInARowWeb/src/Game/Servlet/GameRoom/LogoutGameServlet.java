@@ -34,9 +34,11 @@ public class LogoutGameServlet extends HttpServlet {
             game.removeViewer(SessionUtils.getAttribute(request,Constants.USERNAME));
         }
         else{
-            game.setPlayerRetired(SessionUtils.getAttribute(request, Constants.USERNAME) + " Retired!");
+            if(game.getStatus() == "GAMING")
+                game.setPlayerRetired(SessionUtils.getAttribute(request, Constants.USERNAME) + " Retired!");
             SessionUtils.removeAttribute(request, Constants.UNIQUE_ID);
             game.quitGame(Integer.parseInt(uniqueIDFromSession),isComputerFromSession == "true"? true : false);
+            game.updateStatus();
         }
         response.sendRedirect(Constants.LOBBY_ROOM_URL);
     }

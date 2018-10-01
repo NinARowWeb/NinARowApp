@@ -106,6 +106,7 @@ function enterGame(gameForm){
             {
                 $("#error-message").empty();
                 $("#error-message").append(response);
+                setTimeout(clearMessage, 5000);
             }
             else
                 window.location = "/NinARow/pages/game/GameRoom.html";

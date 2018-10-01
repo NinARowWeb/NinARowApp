@@ -90,7 +90,7 @@ function getStatisticsContent(){
 }
 
 function createUser(index,dataJson) {
-    $('<li>' + dataJson.m_Name + '</li>').appendTo($("#viwers-userslist"));
+    $('<li id = "viewer">'+ (index + 1) + ". " + dataJson.m_Name + '</li>').appendTo($("#viwers-userslist"));
 }
 
 function setHidden(index,data){
