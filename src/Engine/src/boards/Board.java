@@ -227,7 +227,6 @@ public class Board {
         ActiveGame = "No";
         Engine.restartGame();
         Chat = new ChatManager();
-        Viewer = new ViewerManager();
         PlayerRetired = null;
     }
 
